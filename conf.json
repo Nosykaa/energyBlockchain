@@ -1,0 +1,11 @@
+{
+  "tags": { "allowUnknownTags": true },
+  "source": {
+    "include": "./src/server"
+  },
+  "opts": {
+    "destination": "./documentation",
+    "recursive": true,
+    "encoding": "utf8"
+  }
+}

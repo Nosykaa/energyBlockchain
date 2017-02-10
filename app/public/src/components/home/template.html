@@ -1,0 +1,47 @@
+<div layout-align="center" layout="column" class="content">
+    <div ng-show="$ctrl.userType == 'contributor'">
+      <div ng-if="!$ctrl.hasDeployedContract" flex="50" flex-offset="25" layout="row" layout-align="center center">
+        <md-button layout-padding class="md-raised md-primary" ng-click="$ctrl.createDigitalId()" style="margin-top: 100px; width: 260px; height: 60px;">
+          {{$ctrl.labels.CreateDigitalID}}
+        </md-button>
+      </div>
+      <div ng-if="$ctrl.hasDeployedContract && !$ctrl.hasDigitalId" flex="50" flex-offset="25" layout="row" layout-align="center center">
+        <md-button layout-padding class="md-raised md-primary" ng-click="$ctrl.editDigitalId()" style="margin-top: 100px; width: 260px; height: 60px;">
+          {{$ctrl.labels.EditDigitalID}}
+        </md-button>
+      </div>
+    </div>
+
+
+    <md-progress-circular md-mode="indeterminate" ng-if="!$ctrl.isReady" style="position: absolute;left: 50vw; top: 50vh"></md-progress-circular>
+    <div ng-if="$ctrl.isReady && ($ctrl.hasDigitalId || $ctrl.userType == 'validator')" ng-if="">
+      <div flex="80" flex-offset="10" layout-padding >
+        <md-card>
+          <md-card-title style="padding-top: 0">
+            <md-toolbar style="background: none">
+              <md-toolbar-tools layout="row">
+                <h2 class="md-title" flex>{{$ctrl.labels.Notifications}}</h2>
+                <md-button class="md-icon-button" ng-click="$ctrl.clearNotifications()" ng-show="$ctrl.notifications.length > 0">
+                  <md-icon md-font-icon="Material Icons">clear_all</md-icon>
+                </md-button>
+              </md-toolbar-tools>
+            </md-toolbar>
+          </md-card-title>
+          <md-card-content>
+            <p class="md-body-1" ng-show="$ctrl.notifications.length == 0">{{$ctrl.labels.NoNotifications}}</p>
+            <div ng-if="$ctrl.hasNotifications">
+              <md-list>
+                <md-list-item ng-repeat="notification in $ctrl.notifications" ng-click="notification.action ? $ctrl.doNotificationAction(notification) : null">
+                  <p class="md-body-1 ">{{notification.title}}</p>
+                  <p class="md-body-1 " style="text-align: right ">{{notification.createdAt | date: 'dd/MM/yyyy hh:mm:ss' }}</p>
+                  <md-button class="md-icon-button " ng-click="$ctrl.removeNotification(notification) " title="{{$ctrl.labels.DeleteNotification}} ">
+                    <md-icon md-font-icon="Material Icons ">delete</md-icon>
+                  </md-button>
+                </md-list-item>
+              </md-list>
+            </div>
+          </md-card-content>
+        </md-card>
+      </div>
+    </div>
+  </div>

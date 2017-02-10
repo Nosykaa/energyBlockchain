@@ -62,7 +62,7 @@ contract HomeGrid {
        sendEvent(msg.sender, 4, "This prosumer home is now created");
     }
     
-    function addConsumers( string psysicalAddress, bool available, uint buyPrice) { 
+    function addConsumers(string psysicalAddress, bool available, uint buyPrice) { 
        consumers.push(Consumer(msg.sender, psysicalAddress, available, buyPrice));
        consumersPosition[msg.sender] = consumersLength;
        consumersLength = consumers.length;
@@ -91,5 +91,15 @@ contract HomeGrid {
                 sendEvent(msg.sender, 1, "This wallet is not the owner of the consumer house");
             }
         }
+    }
+
+    function getProsumer(address home) constant returns(address, address, string, bool, uint, uint){
+        uint pos = prosumersPosition[home];
+        return (prosumers[pos].box,  prosumers[pos].home,  prosumers[pos].psysicalAddress,  prosumers[pos].available, prosumers[pos].sellPrice, prosumers[pos].buyPrice);
+    }
+
+    function getConsumer(address home) constant returns(address, string, bool, uint){
+        uint pos = consumersPosition[home];
+        return (consumers[pos].home,  consumers[pos].psysicalAddress,  consumers[pos].available, consumers[pos].buyPrice);
     }
 }

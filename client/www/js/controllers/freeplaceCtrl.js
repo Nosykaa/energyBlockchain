@@ -1,9 +1,13 @@
 controllers
-.controller('FreePlaceCtrl', ['$scope', '$rootScope', '$http', '$ionicPopup', '$timeout', 'Place', 'GeoLocalisation', 
+.controller('FreePlaceCtrl', ['$scope', '$rootScope', '$http', '$ionicPopup', '$timeout', 'Place', 'GeoLocalisation',
                               function ($scope, $rootScope, $http, $ionicPopup, $timeout, Place, GeoLocalisation) {
-	
+
 	$scope.loadingFreePlace = false;
 	$scope.sendPlace = false;
+
+    $http.get(API_URL +'/balance/' + user.keystore.address, function (err, res) {
+        $scope.balance = res.ethBalance;
+    }
 
 	$scope.freeMyPlace = function () {
             if ($rootScope.swing) {
@@ -45,8 +49,8 @@ controllers
                     });
                 }
             });
-            
+
 	};
 
-	
+
 }]);

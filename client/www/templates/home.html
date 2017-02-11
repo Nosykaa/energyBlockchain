@@ -1,6 +1,8 @@
 <ion-view>
     <ion-nav-title>
-        <img style="margin-top: 3px;" width="250" src="img/logo_slogan.png"/>
+        <div ng-controller="FreePlaceCtrl">
+            <p> Balance : {{balance}}</p>
+        </div>
     </ion-nav-title>
     <ion-nav-buttons side="right">
         <button class="button button-clear button-positive" ng-click="modalParametres.show()"><i class="icon ion-ios-gear-outline"></i></button>

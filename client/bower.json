@@ -1,7 +1,14 @@
 {
   "name": "client",
   "private": "true",
+  "dependencies": {
+    "angular-material": "^1.1.1"
+  },
   "devDependencies": {
     "ionic": "driftyco/ionic-bower#1.1.1"
+  },
+  "resolutions": {
+    "angular-animate": "^1.4.8",
+    "angular": "1.6.2"
   }
 }

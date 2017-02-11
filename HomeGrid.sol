@@ -9,6 +9,7 @@ contract HomeGrid {
         bool available;
         uint sellPrice;
         uint buyPrice;
+        bytes32 chargingContractListHash;
     }
     
     struct Consumer{
@@ -16,10 +17,15 @@ contract HomeGrid {
         string psysicalAddress;
         bool available;
         uint buyPrice;
+        bytes32 chargingContractListHash;
     }
 
     mapping(address => uint) prosumersPosition;
     mapping(address => uint) consumersPosition;
+
+
+    mapping(address => uint) prosumersBoxPosition;
+    mapping(address => uint) consumersBoxPosition;
     
     Prosumer[] prosumers;
     Consumer[] consumers;
@@ -55,21 +61,23 @@ contract HomeGrid {
         consumersLength=consumers.length;
     }
     
-    function addProsumers(address box,string psysicalAddress, bool available, uint sellPrice, uint buyPrice) { 
-       prosumers.push(Prosumer(box, msg.sender, psysicalAddress, available, sellPrice, buyPrice));
+    function addProsumers(address box,string psysicalAddress, bool available, uint sellPrice, uint buyPrice, bytes32 chargingContractListHash) { 
+       prosumers.push(Prosumer(box, msg.sender, psysicalAddress, available, sellPrice, buyPrice, chargingContractListHash));
        prosumersPosition[msg.sender] = prosumersLength;
+       prosumersBoxPosition[box] = prosumersLength;
        prosumersLength= prosumers.length;
        sendEvent(msg.sender, 4, "This prosumer home is now created");
     }
     
-    function addConsumers(string psysicalAddress, bool available, uint buyPrice) { 
-       consumers.push(Consumer(msg.sender, psysicalAddress, available, buyPrice));
+    function addConsumers(string psysicalAddress, bool available, uint buyPrice, bytes32 chargingContractListHash) { 
+       consumers.push(Consumer(msg.sender, psysicalAddress, available, buyPrice, chargingContractListHash));
        consumersPosition[msg.sender] = consumersLength;
+       consumersBoxPosition[box] = consumersLength;
        consumersLength = consumers.length;
        sendEvent(msg.sender, 4, "This consumer home is now created");
     }
     
-    function updateHome(uint sellPrice, uint buyPrice, bool available, bool isProsumer) {
+    function updateHome(uint sellPrice, uint buyPrice, bool available, bool isProsumer, bytes32 chargingContractListHash) {
         uint pos;
         if (isProsumer){
             pos = prosumersPosition[msg.sender];
@@ -77,6 +85,7 @@ contract HomeGrid {
                 prosumers[pos].available = available;
                 prosumers[pos].sellPrice = sellPrice;
                 prosumers[pos].buyPrice = buyPrice;
+                prosumers[pos].chargingContractListHash = chargingContractListHash;                
                 sendEvent(msg.sender, 4, "This prosumer home is now updated");
             } else {
                 sendEvent(msg.sender, 1, "This wallet is not the owner of the prosumer house");
@@ -86,6 +95,7 @@ contract HomeGrid {
              if (msg.sender == prosumers[pos].home && pos != 0) {
                 consumers[pos].available = available;
                 consumers[pos].buyPrice = buyPrice;
+                consumers[pos].chargingContractListHash = chargingContractListHash;
                 sendEvent(msg.sender, 4, "This consumer home is now updated");
             } else {
                 sendEvent(msg.sender, 1, "This wallet is not the owner of the consumer house");
@@ -93,13 +103,23 @@ contract HomeGrid {
         }
     }
 
-    function getProsumer(address home) constant returns(address, address, string, bool, uint, uint){
+    function getProsumer(address home) constant returns(address, address, string, bool, uint, uint, bytes32){
         uint pos = prosumersPosition[home];
-        return (prosumers[pos].box,  prosumers[pos].home,  prosumers[pos].psysicalAddress,  prosumers[pos].available, prosumers[pos].sellPrice, prosumers[pos].buyPrice);
+        return (prosumers[pos].box,  prosumers[pos].home,  prosumers[pos].psysicalAddress,  prosumers[pos].available, prosumers[pos].sellPrice, prosumers[pos].buyPrice, prosumers[pos].chargingContractListHash);
     }
 
-    function getConsumer(address home) constant returns(address, string, bool, uint){
+    function getConsumer(address home) constant returns(address, string, bool, uint, bytes32){
         uint pos = consumersPosition[home];
-        return (consumers[pos].home,  consumers[pos].psysicalAddress,  consumers[pos].available, consumers[pos].buyPrice);
+        return (consumers[pos].home,  consumers[pos].psysicalAddress,  consumers[pos].available, consumers[pos].buyPrice, consumers[pos].chargingContractListHash);
+    }
+
+    function getProsumerByBox(address box) constant returns(address, address, string, bool, uint, uint, bytes32){
+        uint pos = prosumersBoxPosition[box];
+        return (prosumers[pos].box,  prosumers[pos].home,  prosumers[pos].psysicalAddress,  prosumers[pos].available, prosumers[pos].sellPrice, prosumers[pos].buyPrice, prosumers[pos].chargingContractListHash);
+    }
+
+    function getConsumerByBox(address box) constant returns(address, string, bool, uint, bytes32){
+        uint pos = consumersBoxPosition[home];
+        return (consumers[pos].home,  consumers[pos].psysicalAddress,  consumers[pos].available, consumers[pos].buyPrice, consumers[pos].chargingContractListHash);
     }
 }

@@ -10,9 +10,9 @@
             <div style="font-family:HelveticaNeue">This Week</div>
             <canvas id="line"
                     class="chart chart-line"
-                    chart-data="data"
-                    chart-labels="labels"
-                    chart-series="series"
+                    chart-data="moneyline"
+                    chart-labels="moneylabels"
+                    chart-series="moneyseries1"
                     chart-options="options"
                     chart-dataset-override="datasetOverride"
                     chart-click="onClick">
@@ -22,19 +22,17 @@
             <div style="font-family:HelveticaNeue">Last Week</div>
             <canvas id="line"
                     class="chart chart-line"
-                    chart-data="data2"
-                    chart-labels="labels2"
-                    chart-series="series2"
+                    chart-data="moneyline2"
+                    chart-labels="moneylabels2"
+                    chart-series="moneyseries2"
                     chart-options="options2">
             </canvas>
         </div>
-        <div id="doughnut-graph-dash">
-            <div style="font-family:HelveticaNeue">Last Month</div>
-            <canvas id="doughnut"
-                    class="chart chart-doughnut"
-                    chart-data="data3"
-                    chart-labels="labels3">
-            </canvas>
+        <div style="position: absolute; top: 60%; text-align: center; left:0; right:0;">
+            <div style="font-family:HelveticaNeue"><h3>Last Month:</h3></div>
+            <button id="current-price-buttons" ng-class="{'zoomOutRight':dispache,'zoomInRight':rassemble}" ng-click="energytradeoff()" class="animated button button-menu button-borne-electrique">
+                <div>24</div><i class="ion-social-bitcoin"></i>
+            </button>
         </div>
     </ion-content>
 </ion-view>

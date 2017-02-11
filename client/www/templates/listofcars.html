@@ -6,7 +6,10 @@
     <ion-content>
         <ion-list >
             <ion-item ng-repeat="item in carList">
-                {{item.gegevens}}
+                <div class="row">
+                    <i style="right:15%;padding-right:15%;" class="icon ion-model-s"></i>
+                    <div style="left:25%;">{{item.moneyEarned}} $  -  {{item.energyTransferred}}  -  {{item.energyChargeTime}}</div>
+                </div>
             </ion-item>
         </ion-list>
     </ion-content>

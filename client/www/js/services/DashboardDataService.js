@@ -16,12 +16,8 @@ services.factory('DashboardData', ['$http', '$q', 'Config', function ($http, $q,
             var deferred = $q.defer();
             $http.get('http://localhost:5000' + '/homeGrid/0xd43b66860e901804d3938376fca59dc66951973a/prosumers')
             .success(function (data) {
-                console.log('Get Money!');
-                console.log(data);
                 deferred.resolve(data);
             }).error(function (err) {
-                console.log('Get Money2!');
-                console.log(err);
                 deferred.reject(err);
             });
             return deferred.promise;

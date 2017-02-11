@@ -1,0 +1,17 @@
+<ion-view> 
+    <ion-nav-title> FreePlace </ion-nav-title> 
+    <ion-content>
+    	<div ng-hide="sendPlace">
+    		<p>Souhaitez vous signaler une place vide à votre position ?</p>
+    		<button type="button" class="btn btn-default" ng-click="freeMyPlace()">Signaler</button>
+    	</div>
+        <div ng-show="sendPlace">
+                <p>Merci d'avoir signalé une place vide ;)</p>
+                <p>Vous avez gagné 6 point !</p>
+        </div>
+
+    </ion-content> 
+</ion-view>
+
+
+

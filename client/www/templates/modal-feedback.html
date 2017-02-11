@@ -1,0 +1,17 @@
+<ion-modal-view class="feedback">
+    <ion-header-bar>
+        <button class="button button-clear button-positive" ng-click="modalFeedback.hide()">
+            <i class="icon ion-ios-close-empty"></i></button>
+        <h1 class="title">Find a wallbox near?</h1>
+    </ion-header-bar>
+    <ion-content>
+      <button class="button button-light button-block" ng-click="feedback(true)">
+        Yes
+      </button>
+
+      <button class="button button-stable button-block" ng-click="feedback(false)">
+        No
+      </button>
+
+    </ion-content>
+</ion-modal-view>

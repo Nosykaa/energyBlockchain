@@ -1,0 +1,23 @@
+<ion-modal-view>
+   <ion-header-bar>
+        <h1 class="title">Authentification</h1>
+  </ion-header-bar>
+  <ion-content class="padding">
+      <div class="list list-inset">
+          <label class="item item-input">
+              <input type="text" placeholder="Identifiant" ng-model="user.login">
+          </label>
+          <label class="item item-input">
+              <input type="password" placeholder="Mot de Passe" ng-model="user.password">
+          </label>
+      </div>
+
+      <button style='background:#8bd5e0' class="button button-block button-calm" ng-click="login(user)">Login in</button>
+		<label class="item">
+		    <button class="button button-block button-positive" ng-click="fbLogin()">
+		    Login with Facebook
+		    </button>
+        </label>
+
+  </ion-content>
+</ion-modal-view>

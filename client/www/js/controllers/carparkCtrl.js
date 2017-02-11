@@ -234,6 +234,8 @@ controllers
                     }, 1000);
                     $timeout(function () {
                         $rootScope.modalFeedback.show();
+                        $scope.stopTimeout();
+                        $scope.startTimeout();
                     }, 10000)
                 });
             }

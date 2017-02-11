@@ -1,9 +1,40 @@
-<ion-view view-title="Money Earned">
+<ion-view view-title="Money Earned" ng-init="fillChart()">
+    <div ng-controller="DashboardCtrl">
+    </div>
     <ion-nav-title>
         <!-- <img style="margin-top: 3px;" width="250" src="img/logo_slogan.png"/> -->
         <div style="font-family:HelveticaNeue">Get Rich or Die Tryin'...</div>
     </ion-nav-title>
     <ion-content>
-        <div>Content Baby</div>
+        <div id="line-graph-dash">
+            <div style="font-family:HelveticaNeue">This Week</div>
+            <canvas id="line"
+                    class="chart chart-line"
+                    chart-data="data"
+                    chart-labels="labels"
+                    chart-series="series"
+                    chart-options="options"
+                    chart-dataset-override="datasetOverride"
+                    chart-click="onClick">
+            </canvas>
+        </div>
+        <div id="chart-graph-dash">
+            <div style="font-family:HelveticaNeue">Last Week</div>
+            <canvas id="line"
+                    class="chart chart-line"
+                    chart-data="data2"
+                    chart-labels="labels2"
+                    chart-series="series2"
+                    chart-options="options2">
+            </canvas>
+        </div>
+        <div id="doughnut-graph-dash">
+            <div style="font-family:HelveticaNeue">Last Month</div>
+            <canvas id="doughnut"
+                    class="chart chart-doughnut"
+                    chart-data="data3"
+                    chart-labels="labels3">
+            </canvas>
+        </div>
     </ion-content>
 </ion-view>

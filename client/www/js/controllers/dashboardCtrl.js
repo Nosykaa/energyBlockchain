@@ -1,13 +1,17 @@
 controllers
-.controller('DashboardCtrl', ['$scope', '$rootScope', '$http', '$timeout', '$state',
-                              function ($scope, $rootScope, $http, $timeout, $state) {
+.controller('DashboardCtrl', ['$scope', '$rootScope', '$http', '$timeout', '$state', '$ionicPopup', 'DashboardData',
+                              function ($scope, $rootScope, $http, $timeout, $state, $ionicPopup, DashboardData) {
     /**
-    * Init variable
+    * Init controller
     */
     $scope.isLoading = false;
-
     $scope.dispache = false;
+    $scope.energyPrice = 0;
+    $scope.carList = [];
 
+    /**
+    * Fake data setup for all money graphs. Services to be created.
+    */
     $scope.labels3 = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
     $scope.data3 = [300, 500, 100];
 
@@ -69,6 +73,48 @@ controllers
       }
     };
 
+
+    /**
+    * Get Data From Services
+    */
+    // $scope.getFinancialInformation = function () {
+    //
+    // };
+
+    DashboardData.get_money().then(function(data){
+        console.log('dashdata')
+        console.log(data);
+        $scope.energyPrice = data[0].buyPrice;
+    }).catch(error => {
+        console.log('error')
+        console.log(error);
+    });
+
+
+    //
+    //
+    //
+    //         if($rootScope.user){
+    //                 $rootScope.user.score += 6;
+    //         }
+    //         $scope.sendPlace = true;
+    //         $scope.loadingFreePlace = false;
+    //         $rootScope.loading.hide();
+    //         $ionicPopup.alert({
+    //             title: 'Merci d\'avoir signalé une place vide ;)',
+    //             template: 'Vous avez gagné 6 points !'
+    //         });
+    //         $timeout(function () {
+    //             $scope.swing = false;
+    //         }, 1000*60*5);
+    // }).error(function (err) {
+    //         $scope.sendPlace = false;
+    //         $rootScope.loading.hide();
+    // });
+
+    /**
+    * Dashboard Routes
+    */
     $scope.listOfCars = function () {
       $scope.dispache = true;
       $timeout(function () {

@@ -55,6 +55,20 @@ class UserService {
       }).catch(reject);
     });
   }
+
+  findHomeGridAddress(){
+    return new Promise((resolve, reject) => {
+
+      database.getDb().then(db => {
+        db.collection('app').findOne({"login": "homeGrid"}, (err, contract) => {
+          if (err) {
+            return reject(err);
+          }
+          resolve(contract.homeGridAddress);
+        });
+      }).catch(reject);
+    });
+  }
 }
 
 module.exports = new UserService();

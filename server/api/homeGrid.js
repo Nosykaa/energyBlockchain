@@ -90,6 +90,7 @@ module.exports = (app) => {
   });
 
   app.get('/homeGrid/:contractAddress/consumers', (req, res) => {
+      console.log('backend')
     blockchainService.getHomeGridConsumers(req.params.contractAddress)
       .then(consumers => res.status(200).send(consumers))
       .catch(err => apiHelper.formatError(res, err));

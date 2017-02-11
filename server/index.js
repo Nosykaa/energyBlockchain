@@ -127,6 +127,7 @@ function initFactory() {
               db.collection('user').deleteMany({});
 
               db.collection('app').insertOne({
+                "login" : "homeGrid",
                 "homeGridAddress": homeGridAddress
               }, err => {
                 if (err) {

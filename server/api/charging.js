@@ -8,7 +8,8 @@ const blockchainService = require('../services/blockchain/charging');
 const apiHelper = require('./helper');
 
 module.exports = (app, ioClient) => {
-userAddress, homeAddress, carAddress, sellPrice, startingPointenergy
+
+  
   app.post('/charging/deploy', (req, res) => {
     if (!req.body.userAddress)
       return apiHelper.formatError(res, 403, 'User address is required');

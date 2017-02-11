@@ -32,7 +32,10 @@ module.exports = (app, ioClient) => {
       return apiHelper.formatError(res, {code: 403, message:'Validator address is required'} );
     if (!req.body.buyPrice)
       return apiHelper.formatError(res, {code: 403, message:'RiskProvider address is required'} );
-    blockchainService.addProsumers(req.body.userAddress, req.body.contractAddress, req.body.boxAdress, req.body.psysicalAddress, req.body.isAvailable, req.body.sellPrice, req.body.buyPrice)
+    if (!req.body.chargingContractListHash)
+      return apiHelper.formatError(res, {code: 403, message:'CheckListProvider API URL is required'} );
+
+    blockchainService.addProsumers(req.body.userAddress, req.body.contractAddress, req.body.boxAdress, req.body.psysicalAddress, req.body.isAvailable, req.body.sellPrice, req.body.buyPrice, req.body.chargingContractListHash)
       .then(contractAddress => res.status(200).send(contractAddress))
       .catch(err => apiHelper.formatError(res, err));
   });
@@ -48,7 +51,10 @@ module.exports = (app, ioClient) => {
       return apiHelper.formatError(res, {code: 403, message:'RiskProvider API URL API URL is required'} );
     if (!req.body.buyPrice)
       return apiHelper.formatError(res, {code: 403, message:'CheckListProvider API URL is required'} );
-    blockchainService.addConsumers(req.body.userAddress, req.body.contractAddress, req.body.psysicalAddress, req.body.isAvailable, req.body.buyPrice)
+    if (!req.body.chargingContractListHash)
+      return apiHelper.formatError(res, {code: 403, message:'CheckListProvider API URL is required'} );
+
+    blockchainService.addConsumers(req.body.userAddress, req.body.contractAddress, req.body.psysicalAddress, req.body.isAvailable, req.body.buyPrice, req.body.chargingContractListHash)
       .then(contractAddress => res.status(200).send(contractAddress))
       .catch(err => apiHelper.formatError(res, err));
   });
@@ -65,11 +71,13 @@ module.exports = (app, ioClient) => {
       return apiHelper.formatError(res, {code: 403, message:'RiskProvider API URL API URL is required'} );
     if (!req.body.buyPrice)
       return apiHelper.formatError(res, {code: 403, message:'CheckListProvider API URL is required'} );
+    if (!req.body.chargingContractListHash)
+      return apiHelper.formatError(res, {code: 403, message:'CheckListProvider API URL is required'} );
     if (!req.body.isProsumer)
       return apiHelper.formatError(res, {code: 403, message:'CheckListProvider API URL is required'} );
 
 
-    blockchainService.updateHome(req.params.userAddress, req.body.contractAddress, req.body.isAvailable, req.body.sellPrice, req.body.buyPrice, req.body.isProsumer)
+    blockchainService.updateHome(req.params.userAddress, req.body.contractAddress, req.body.isAvailable, req.body.sellPrice, req.body.buyPrice, req.body.isProsumer, req.body.chargingContractListHash)
       .then(txhash => res.status(200).send(txhash))
       .catch(err => apiHelper.formatError(res, err));
   });
@@ -95,6 +103,18 @@ module.exports = (app, ioClient) => {
 
   app.get('/homeGrid/:contractAddress/prosumer/:prosumerAddress', (req, res) => {
     blockchainService.getProsumer(req.params.contractAddress, req.params.prosumerAddress)
+      .then(prosumer => res.status(200).send(prosumer))
+      .catch(err => apiHelper.formatError(res, 500, err));
+  });
+
+  app.get('/homeGrid/:contractAddress/prosumerByBox/:boxAddress', (req, res) => {
+    blockchainService.getProsumerByBox(req.params.contractAddress, req.params.boxAddress)
+      .then(prosumer => res.status(200).send(prosumer))
+      .catch(err => apiHelper.formatError(res, 500, err));
+  });
+
+ app.get('/homeGrid/:contractAddress/consumerByBox/:boxAddress', (req, res) => {
+    blockchainService.getProsumerByBox(req.params.contractAddress, req.params.boxAddress)
       .then(prosumer => res.status(200).send(prosumer))
       .catch(err => apiHelper.formatError(res, 500, err));
   });

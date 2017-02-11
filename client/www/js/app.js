@@ -77,6 +77,51 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         templateUrl: "templates/profile.html",
         controller: "ProfileCtrl"
     })
+<<<<<<< HEAD
+=======
+    .state('oauthcallback', {
+        url: "/oauthcallback",
+        cache: false,
+        templateUrl: "templates/oauthcallback.html",
+        controller: "ProfileCtrl"
+    })
+	.state('homedashboard', {
+		url: "/dashboard",
+		cache: false,
+		templateUrl: "templates/dashboard.html",
+		controller: "DashboardCtrl"
+	})
+	.state('listofcars', {
+		url: "/listofcars",
+		cache: false,
+		templateUrl: "templates/listofcars.html",
+		controller: "DashboardCtrl"
+	})
+	.state('moneyearned', {
+		url: "/moneyearned",
+		cache: false,
+		templateUrl: "templates/moneyearned.html",
+		controller: "DashboardCtrl"
+	})
+	.state('energytradeoff', {
+		url: "/energytradeoff",
+		cache: false,
+		templateUrl: "templates/energytradeoff.html",
+		controller: "DashboardCtrl"
+	})
+	.state('currentenergyprices', {
+		url: "/currentenergyprices",
+		cache: false,
+		templateUrl: "templates/currentenergyprices.html",
+		controller: "DashboardCtrl"
+	})
+	.state('myhomesettings', {
+		url: "/myhomesettings",
+		cache: false,
+		templateUrl: "templates/myhomesettings.html",
+		controller: "DashboardCtrl"
+	})
+>>>>>>> fbf131764aaeb685b375e5f86728f33821a51726
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/home');

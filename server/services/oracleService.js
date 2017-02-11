@@ -19,9 +19,6 @@ class OracleService {
       .catch(reject);
     });
   }
-
-
-
 }
 
 module.exports = new OracleService();

@@ -7,7 +7,7 @@
 const blockchainService = require('../services/blockchain/charging');
 const apiHelper = require('./helper');
 
-module.exports = (app, ioClient) => {
+module.exports = (app) => {
 
   
   app.post('/charging/deploy', (req, res) => {

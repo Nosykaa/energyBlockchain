@@ -82,4 +82,4 @@ class ChargingService {
 
 
 }
-module.exports = new HomeGridService();
+module.exports = new ChargingService();

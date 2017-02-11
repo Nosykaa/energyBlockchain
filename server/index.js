@@ -5,15 +5,18 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
-
+const blockchain = require('./services/blockchain');
 
 app.use(cors());
 app.use(bodyParser.json({ limit: '500mb' }));
 
-require('./api/oracle')(app);
+
+require('./api/homeGrid')(app);
+require('./api/charging')(app);
 
 app.listen(process.env.NODE_PORT, () => {
   console.log('Server Trade-E App listenning on port ' + process.env.NODE_PORT);
+  blockchain.connect();
   initFactory();
 });
 

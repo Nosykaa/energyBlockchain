@@ -1,0 +1,20 @@
+<ion-view>
+    <ion-nav-title>
+        Dashboard
+    </ion-nav-title>
+    <ion-nav-buttons side="right">
+        <button ng-click="stopRoute()" class="button button-clear button-positive"><i class="icon ion-ios-close-empty"></i></button>
+    </ion-nav-buttons>
+    <ion-content>
+        <div id="map"></div>
+        <div class="list borne-electrique card" ng-hide="start">
+            <div ng-repeat="item in items | limitTo:3" ng-click="choicePlace(item)" class="item">{{item.nomDeLieu}} <span class="badge badge-stable">{{item.distance/1000|number:1}} km</span></div>
+        </div>
+        <div class="list card" ng-show="start">
+            <div class="item item-text-wrap">
+                <span ng-bind-html="currentStep.instructions|html"></span> ({{currentStep.distance.text}}/{{currentStep.duration.text}})
+            </div>
+        </div>
+        <button ng-show="!start" type="button" class="button cercle-button borne-electrique" ng-click="startRoute()">Go</button>
+    </ion-content>
+</ion-view>

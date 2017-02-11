@@ -57,6 +57,12 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     $stateProvider
 
     // setup an abstract state for the tabs directive
+	.state('homedashboard', {
+		url: "/dashboard",
+		cache: false,
+		templateUrl: "templates/dashboard.html",
+		controller: "DashboardCtrl"
+	})
     .state('carpark', {
         url: "/carpark",
         cache: false,

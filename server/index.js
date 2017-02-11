@@ -9,20 +9,19 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json({ limit: '500mb' }));
-app.use(auth.initialize());
 
 require('./api/oracle')(app);
-require('./api/watch')(app);
 
 app.listen(process.env.NODE_PORT, () => {
-  console.log('Validator App listenning on port ' + process.env.NODE_PORT);
+  console.log('Server Trade-E App listenning on port ' + process.env.NODE_PORT);
   initFactory();
 });
 
 
 function initFactory() {
   let database = require('./services/db');
-  database.getDb().then(db => {
+  database.getDb()
+  .then(db => {
 
       db.collection('identity').insertOne({
         "keystore_public_address": "0x2574ee585b9cb0da4df5e8c8a279bb4760282e6b",
@@ -32,9 +31,8 @@ function initFactory() {
           throw err;
         }
       });
-    });
-
-  }).catch(err => {
+    })
+  .catch(err => {
     throw err;
   });
 }

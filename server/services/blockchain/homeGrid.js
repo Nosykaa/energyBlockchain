@@ -1,5 +1,5 @@
 const web3 = require('./index').provider;
-const CONTRACT = require('./contract/subscription');
+const CONTRACT = require('./contract/homeGrid');
 
 
 class HomeGridService {
@@ -19,7 +19,7 @@ class HomeGridService {
   addProsumers(userAddress, contractAddress, boxAdress, psysicalAddress, isAvailable, sellPrice, buyPrice, chargingContractListHash) {
     return new Promise((resolve, reject) => {
       let contract = web3.eth.contract(CONTRACT.abi).at(contractAddress);
-      contract.addProsumers(boxAdress, psysicalAddress, isAvailable, sellPrice, buyPrice, { from: userAddress, gas: 2500000, value: web3.toWei(75, 'ether') }, (err, result) => {
+      contract.addProsumers(boxAdress, psysicalAddress, isAvailable, sellPrice, buyPrice, { from: userAddress, gas: 2500000 }, (err, result) => {
         if (err) {
           return reject(err);
         }
@@ -44,7 +44,7 @@ class HomeGridService {
   addConsumers(userAddress, contractAddress, psysicalAddress, isAvailable, buyPrice, chargingContractListHash) {
     return new Promise((resolve, reject) => {
       let contract = web3.eth.contract(CONTRACT.abi).at(contractAddress);
-      contract.addConsumers(psysicalAddress, isAvailable, buyPrice, { from: userAddress, gas: 2500000, value: web3.toWei(75, 'ether') }, (err, result) => {
+      contract.addConsumers(psysicalAddress, isAvailable, buyPrice, { from: userAddress, gas: 2500000 }, (err, result) => {
         if (err) {
           return reject(err);
         }
@@ -69,7 +69,7 @@ class HomeGridService {
   updateHome(userAddress, contractAddress, isAvailable, sellPrice, buyPrice, isProsumer, chargingContractListHash) {
     return new Promise((resolve, reject) => {
       let contract = web3.eth.contract(CONTRACT.abi).at(contractAddress);
-      contract.updateHome(sellPrice, buyPrice, isAvailable, isProsumer, { from: userAddress, gas: 2500000, value: web3.toWei(75, 'ether') }, (err, result) => {
+      contract.updateHome(sellPrice, buyPrice, isAvailable, isProsumer, { from: userAddress, gas: 2500000}, (err, result) => {
         if (err) {
           return reject(err);
         }

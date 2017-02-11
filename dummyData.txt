@@ -1,0 +1,48 @@
+{
+    consumers : [
+        {
+            home : "",
+            psysicalAddress : "Driehovenstraat 1, 9725 BJ Groningen",
+            available : true,
+            buyPrice : 0.15,
+        },
+        {
+            home : "",
+            psysicalAddress : "Barestraat 38, 9725 CP Groningen",
+            available : true,
+            buyPrice : 0.17,
+        },
+        {
+            home : "",
+            psysicalAddress : "Rijnstraat 15A, 9725 EP Groningen",
+            available : true,
+            buyPrice : 0.13,
+        },
+    ],
+    prosumers : [
+        {
+            box : "",
+            home : "",
+            psysicalAddress : "Berkelstraat 13A, 9725 GT Groningen",
+            available : true,
+            buyPrice : 0.13,
+            sellPrice : 0.15,
+        },
+        {
+            box : "",
+            home : "",
+            psysicalAddress : "J.A. Feithstraat 4-6, 9725 Groningen",
+            available : true,
+            buyPrice : 0.15,
+            sellPrice : 0.17,
+        },
+        {
+            box : "",
+            home : "",
+            psysicalAddress : "Palmslag 1, 9724 CN Groningen",
+            available : true,
+            buyPrice : 0.10,
+            sellPrice : 0.13,
+        },
+    ]
+}

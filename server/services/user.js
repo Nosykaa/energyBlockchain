@@ -1,32 +1,61 @@
-/**
- * @module server/api/subscription
- * @requires module:server/services/blockchain/subscription
- * @requires module:server/api/helper
- */
+const database = require('./db');
 
-const userService = require('../services/user');
-const apiHelper = require('./helper');
+class UserService {
 
-module.exports = (app) => {
+  save (login, user) {
+    return new Promise((resolve, reject) => {
+      database.getDb().then(db => {
 
-  app.post('/user/:login/charging', (req, res) => {
-    if (!req.body.user)
-      return apiHelper.formatError(res, {code: 403, message:'User object is required'});
-    userService.save(req.params.login, user)
-      .then(() => res.status(200).end())
-      .catch(err => errorHelper.display500(res, err));
-  });
+        db.collection('user').findOne({ login: login }, (err, result) => {
+            if (err) {
+              return reject(err);
+            }
 
-  app.get('/user/:login', (req, res) => {
-      userService.findByLogin(req.params.login)
-      .then(user => res.status(200).json(user))
-      .catch(err => errorHelper.display(res, err));
-  });
+            if (!result) {
+              db.collection('user').insertOne(user, (err, result) => {
+                if (err) {
+                  return reject(err);
+                }
+                resolve(result._id);
+              });
+            }
+            else {
+              db.collection('user').updateOne({ "login": login }, { $set: user }, (err, result) => {
+                if (err) {
+                  return reject(err);
+                }
+                if (result.nb === 0) {
+                  return reject('Unable to update the user');
+                }
+                resolve();
+              });
+            }
+          });
+      }).catch(reject);
+    });
+  }
 
-  app.get('/user/:login/chargingHistory', (req, res) => {
-      userService.findByLogin(req.params.login)
-      .then(user => res.status(200).json(user.chargingHistory))
-      .catch(err => errorHelper.display(res, err));
-  });
+  findByLogin(login) {
+    return new Promise((resolve, reject) => {
 
-};
+      database.getDb().then(db => {
+        db.collection('user').findOne({ "login": login }, (err, user) => {
+          if (err) {
+            return reject(err);
+          }
+          if (!user) {
+            return reject({
+              code: 404,
+              message: 'User not found. Invalid address'
+            });
+          }
+
+          resolve(user);
+        });
+      }).catch(reject);
+    });
+  }
+}
+
+module.exports = new UserService();
+

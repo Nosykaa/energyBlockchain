@@ -4,6 +4,15 @@
         <div style="font-family:HelveticaNeue">My Home</div>
     </ion-nav-title>
     <ion-content>
-        <div>Content Baby</div>
+        <div style="position: absolute; left: 0; right: 0; top: 0; margin-top: 50px; bottom: 0; text-align: center;">
+            <div ng-if="dispache" style="position: absolute; top: 25%; text-align: center; left:0; right:0;"><img height="128" src="img/splash.gif"/></div>
+            <div class="row">
+                <div class="col">
+                    <button style="background-color:#FFFFFF;border-color:#B26300;color:#B26300;" ng-class="{'zoomOutRight':dispache,'zoomInRight':rassemble}" ng-click="energytradeoff()" class="animated button button-menu button-borne-electrique">
+                        <i class="icon ion-ios-home"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
     </ion-content>
 </ion-view>

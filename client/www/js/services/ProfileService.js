@@ -32,7 +32,7 @@ services.factory('Profile', ['$http', '$q', 'Config', function ($http, $q, Confi
 
             console.log(req);
             //$http.post('https://api.pbapp.net/Auth?api_key=' + api_key + '&iodocs=true', {api_secret: api_secret}).success(function (result) {
-            $http(req).success(function (result) {    
+            $http(req).success(function (result) {
                 console.log(result.response.player);
                 deferred.resolve(result.response.player);
             }).error(function (err) {

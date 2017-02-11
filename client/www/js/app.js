@@ -11,7 +11,7 @@
 var API_URL = "http://localhost:3000";
 
 
-angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter.services', 'ngOpenFB'])
+angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter.services', 'ngOpenFB','chart.js'])
 
 .run(['$ionicPlatform', '$rootScope', '$timeout', '$cordovaNetwork', '$cordovaDialogs', '$ionicLoading', '$window', 'Config', 'Authentification', 'GeoLocalisation', 'User', 'ngFB', function($ionicPlatform, $rootScope, $timeout, $cordovaNetwork, $cordovaDialogs, $ionicLoading, $window, Config, Authentification, GeoLocalisation, User, ngFB) {
 	ngFB.init({appId: '1685882724989351'});

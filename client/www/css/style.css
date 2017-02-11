@@ -265,8 +265,42 @@
   padding: 5px;
 }
 
+#line-graph-dash {
+    padding-top:20px;
+    padding-left:20%;
+    position: relative;;
+    text-align: center;
+    height:200px;
+    width:300px;
+}
 
-#dashboard-content {
-    background-color:#F0F0F0;
-    height: 100%;
+#chart-graph-dash {
+    padding-top:20px;
+    padding-left:20%;
+    position: relative;
+    text-align: center;
+    height:200px;
+    width:300px;
+}
+
+#doughnut-graph-dash {
+    padding-top:20px;
+    padding-left:35%;
+    position: relative;
+    text-align: center;
+    height:100px;
+    width:250px;
+}
+
+#energy-tradeoff-buttons {
+    background-color:#FFFFFF;
+    border-color:#408CB2;
+    margin-top:50%;
+    color:#408CB2;
+}
+
+#current-price-buttons {
+    background-color:#FFFFFF;
+    border-color:#46B288;
+    color:#46B288;
 }

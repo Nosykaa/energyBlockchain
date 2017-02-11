@@ -1,8 +1,6 @@
 <ion-view>
-    <ion-nav-title>
-        <div ng-controller="FreePlaceCtrl">
-            <p> Balance : {{balance}}</p>
-        </div>
+    <ion-nav-title >
+        <p>Balance :100</p>
     </ion-nav-title>
     <ion-nav-buttons side="right">
         <button class="button button-clear button-positive" ng-click="modalParametres.show()"><i class="icon ion-ios-gear-outline"></i></button>
@@ -18,7 +16,7 @@
             <div class="row">
                 <div class="col">
                     <button ng-class="{'zoomOutUp':dispache,'zoomInUp':rassemble}" ng-click="cherchePlace()" class="animated button button-menu button-cherche-place">
-                        <span style="font-size: 20px; margin-right: 10px; padding-left: 10px; float: left; font-weight: bold; width: 180px; line-height: 20px; text-align: left;">Find a WallBox</span>
+                        <span style="font-size: 20px; margin-right: 10px; padding-left: 10px; float: left; font-weight: bold; width: 180px; line-height: 20px; text-align: left;">Find a wallbox</span>
                         <i class="icon ion-search" style="float: right"></i>
                     </button>
                 </div>
@@ -38,15 +36,7 @@
                     <img width="300" src="img/acceuil-fleches.png"/>
                 </div>
             </div>
-            <div class="row">
-                <div style="width: 100%">
-                    <div class="title " style="text-align: center">
-                      Air Quality <br>
-                      <span ng-repeat="i in rate2 track by $index" class="ion-ios-cloud" style="font-size:150%;padding:1%; color: #9dcca0"></span>
-                      <span ng-repeat="i in rate track by $index" class="ion-ios-cloud-outline" style="font-size:150%;padding:1%"></span>
-                    </div>
-                </div>
-            </div>
         </div>
+
     </ion-content>
 </ion-view>

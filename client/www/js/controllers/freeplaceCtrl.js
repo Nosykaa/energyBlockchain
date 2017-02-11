@@ -6,6 +6,10 @@ controllers
 	$scope.sendPlace = false;
 
 
+    $http.get(API_URL + '/balance/0xa521241a16938bc2c56005a8745366e3d8658501')
+        .then (function (data) {
+                $scope.balance = data.data;
+        });
 
 	$scope.freeMyPlace = function () {
             if ($rootScope.swing) {

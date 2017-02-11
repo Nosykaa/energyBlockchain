@@ -8,10 +8,10 @@
 
 /* En attendant que le server marche bien */
 //var API_URL = "http://192.168.1.35/parkinglibre";
-var API_URL = "http://localhost:3000";
+var API_URL = "http://localhost:5000";
 
 
-angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter.services', 'ngOpenFB','chart.js'])
+angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter.services', 'ngOpenFB'])
 
 .run(['$ionicPlatform', '$rootScope', '$timeout', '$cordovaNetwork', '$cordovaDialogs', '$ionicLoading', '$window', 'Config', 'Authentification', 'GeoLocalisation', 'User', 'ngFB', function($ionicPlatform, $rootScope, $timeout, $cordovaNetwork, $cordovaDialogs, $ionicLoading, $window, Config, Authentification, GeoLocalisation, User, ngFB) {
 	ngFB.init({appId: '1685882724989351'});

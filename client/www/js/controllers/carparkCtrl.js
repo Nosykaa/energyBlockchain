@@ -4,22 +4,35 @@ controllers
 
         var options = {timeout: 10000, enableHighAccuracy: true};
 
-         $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+        $scope.currentPosition = new google.maps.LatLng(53.2102596,6.5669172);
+        $scope.endPosition = new google.maps.LatLng(53.2083994,6.560158);
 
-           var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+       var mapOptions = {
+         center: $scope.currentPosition,
+         zoom: 15,
+         mapTypeId: google.maps.MapTypeId.ROADMAP
+       };
 
-           var mapOptions = {
-             center: latLng,
-             zoom: 15,
-             mapTypeId: google.maps.MapTypeId.ROADMAP
-           };
+       $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
-           $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
-         }, function(error){
-           console.log("Could not get location");
+         $scope.directionsService = new google.maps.DirectionsService();
+         $scope.directionsDisplay = new google.maps.DirectionsRenderer();
+         $scope.directionsDisplay.setMap($scope.map);
+
+         $scope.marker = new google.maps.Marker({
+             position: $scope.currentPosition,
+             map: $scope.map,
+             title: 'Yolo',
+             icon: 'img/me.png'
          });
 
+         $scope.marker = new google.maps.Marker({
+             position: $scope.endPosition,
+             map: $scope.map,
+             title: 'Yolo',
+             icon: 'img/item.png'
+         });
 
         $scope.place = Place;
         console.log($scope.place.payingPark);
@@ -142,7 +155,6 @@ controllers
 
     $scope.ifArrive = function(){
         console.log("Function if arrive");
-        console.log($scope.distance($scope.currentPos.latitude, $scope.currentPos.longitude, $scope.currentItem.y, $scope.currentItem.x, "K"));
         if($scope.distance($scope.currentPos.latitude, $scope.currentPos.longitude, $scope.currentItem.y, $scope.currentItem.x, "K") < 0.1){
             console.log("arriving soon");
             $scope.stopTimeout();
@@ -156,8 +168,7 @@ controllers
         GeoLocalisation.getPosition().then(function (position) {
             console.log(position);
             console.log('start2');
-            $scope.currentPos = position.coords;
-            $scope.marker.setPosition({lat: position.coords.latitude, lng: position.coords.longitude});
+            $scope.currentPos = $scope.currentPosition;
             $scope.map.setCenter($scope.marker.getPosition());
             $scope.ifArrive();
             $scope.promiseTimeout = $timeout(function () {
@@ -179,7 +190,7 @@ controllers
     $scope.choicePlace = function (item) {
         $scope.hasChoice = true;
         $scope.currentItem = item;
-        end_pos = new google.maps.LatLng($scope.currentItem.y, $scope.currentItem.x);
+        end_pos = new google.maps.LatLng();
 
         var request = {
            origin: $scope.currentPosition,
@@ -200,7 +211,7 @@ controllers
 
     $scope.startRoute = function () {
         $scope.start = true;
-        end_pos = new google.maps.LatLng($scope.currentItem.y, $scope.currentItem.x);
+        end_pos = new google.maps.LatLng(53.2083994,6.560158);
 
         var request = {
            origin: $scope.currentPosition,
@@ -209,12 +220,6 @@ controllers
         };
 
 
-        $scope.marker = new google.maps.Marker({
-            position: $scope.currentPosition,
-            map: $scope.map,
-            title: 'Yolo',
-            icon: 'img/me.png'
-        });
 
         $scope.directionsService.route(request, function(result, status) {
            if (status == google.maps.DirectionsStatus.OK) {
@@ -226,7 +231,6 @@ controllers
                     $scope.ng = $scope.steps[0];
                     $timeout(function() {
                         $scope.map.setCenter($scope.currentPosition);
-                        $scope.map.setZoom(18);
                     }, 1000);
                     $timeout(function () {
                         $rootScope.modalFeedback.show();
@@ -255,7 +259,7 @@ controllers
         var myLatlng = new google.maps.LatLng(item.y,item.x);
         var mapOptions = {
           center: myLatlng,
-          zoom: 16,
+          zoom: 15,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         }
 

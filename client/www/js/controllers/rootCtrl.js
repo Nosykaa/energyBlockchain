@@ -1,6 +1,6 @@
 controllers
-.controller('RootCtrl', ['$scope', '$state', '$rootScope', '$ionicLoading','$timeout', 'Sensitize', 'AirQuality', '$ionicModal','$q', 'GeoLocalisation', '$ionicPopup', 'Place',
-    function($scope, $state, $rootScope, $ionicLoading, $timeout, Sensitize, AirQuality, $ionicModal,$q, GeoLocalisation, $ionicPopup, Place) {
+.controller('RootCtrl', ['$scope', '$state', '$rootScope', '$ionicLoading','$timeout', '$ionicModal','$q', 'GeoLocalisation', '$ionicPopup', 'Place',
+    function($scope, $state, $rootScope, $ionicLoading, $timeout, $ionicModal,$q, GeoLocalisation, $ionicPopup, Place) {
 
         $rootScope.loading = {
             show: function () {
@@ -14,18 +14,10 @@ controllers
         $scope.elapsed = false;
       $timeout(function(){$scope.elapsed = true}, 10000);
 
-      Sensitize.getSentence().success(function(data){
-        $scope.sentence = data[0].sentence;
-      });
 
       GeoLocalisation.getPosition().then(function (position) {
 
-        AirQuality.getAirQuality(position.coords.latitude, position.coords.longitude).then(function(data){
-          var num = parseInt(data[0])
-          num = ~~(num/2);
-          $scope.rate = new Array(num)
-          $scope.rate2 = new Array(5-num)
-        })
+
 
       }, function () {
           $ionicPopup.alert({

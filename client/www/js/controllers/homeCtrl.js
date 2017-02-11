@@ -57,6 +57,15 @@ controllers
       window.localStorage.setItem('limit', limit);
     };
 
+    $ionicModal.fromTemplateUrl('templates/modal-authentification.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+      }).then(function(modal) {
+        $scope.modal = modal
+        if(!$rootScope.user){
+        	$scope.modal.show();
+        }
+      });
 
       $scope.openModal = function() {
     	  $scope.user = null;
@@ -81,5 +90,7 @@ controllers
         $scope.rassemble = true;
     };
 
+    $scope.fbLogin = function () {
 
+    };
 }]);

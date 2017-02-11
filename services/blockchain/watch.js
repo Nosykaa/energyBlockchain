@@ -3,9 +3,7 @@ const request = require('request');
 const web3 = require('./index').provider;
 const GUID = require('../../index').GUID;
 
-const notificationService = require('../notification');
-const userService = require('../user');
-const subscriptionService = require('../blockchain/subscription');
+
 const balanceService = require('../blockchain/balance');
 
 const RISK_REQUEST_EVENT = "RiskRequest";

@@ -1,10 +1,8 @@
 /**
  * @module server/api/helper
- * @requires module:server/services/user
  * @requires module:util
  */
 
-const userService = require('../services/user');
 const util = require('util');
 
 /**

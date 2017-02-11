@@ -67,7 +67,7 @@ module.exports = (app, ioClient) => {
       return apiHelper.formatError(res, {code: 403, message:'CheckListProvider API URL is required'} );
     if (!req.body.isProsumer)
       return apiHelper.formatError(res, {code: 403, message:'CheckListProvider API URL is required'} );
- 
+
 
     blockchainService.updateHome(req.params.userAddress, req.body.contractAddress, req.body.isAvailable, req.body.sellPrice, req.body.buyPrice, req.body.isProsumer)
       .then(txhash => res.status(200).send(txhash))
@@ -86,7 +86,7 @@ module.exports = (app, ioClient) => {
       .then(consumers => res.status(200).send(consumers))
       .catch(err => apiHelper.formatError(res, 500, err));
   });
-  
+
   app.get('/homeGrid/:contractAddress/consumer/:consumerAddress', (req, res) => {
     blockchainService.getConsumer(req.params.contractAddress, req.params.consumerAddress)
       .then(consumer => res.status(200).send(consumer))

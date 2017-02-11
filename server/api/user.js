@@ -14,19 +14,27 @@ module.exports = (app) => {
       return apiHelper.formatError(res, {code: 403, message:'User object is required'});
     userService.save(req.params.login, user)
       .then(() => res.status(200).end())
-      .catch(err => errorHelper.display500(res, err));
+      .catch(err =>  apiHelper.formatError(res, err));
   });
 
   app.get('/user/:login', (req, res) => {
       userService.findByLogin(req.params.login)
       .then(user => res.status(200).json(user))
-      .catch(err => errorHelper.display(res, err));
+      .catch(err =>  apiHelper.formatError(res, err));
   });
 
   app.get('/user/:login/chargingHistory', (req, res) => {
       userService.findByLogin(req.params.login)
       .then(user => res.status(200).json(user.chargingHistory))
-      .catch(err => errorHelper.display(res, err));
+      .catch(err =>  apiHelper.formatError(res, err));
+  });
+
+  app.get('/app/toto', (req, res) => {
+      userService.findHomeGridAddress()
+      .then(address => {
+          console.log(address);
+          res.status(200).json(address)})
+      .catch(err =>  apiHelper.formatError(res, err));
   });
 
 };

@@ -8,7 +8,7 @@ class HomeGridService {
     return new Promise((resolve, reject) => {
       web3.eth.contract(CONTRACT.abi).new({ from: userAddress, data: CONTRACT.code, gas: 4500000 }, (err, contract) => {
         if (err) {
-          reject;
+          return reject(err);
         } else if (contract.address) {
           resolve(contract.address);
         }
@@ -19,14 +19,16 @@ class HomeGridService {
   addProsumers(userAddress, contractAddress, boxAdress, psysicalAddress, isAvailable, sellPrice, buyPrice, chargingContractListHash) {
     return new Promise((resolve, reject) => {
       let contract = web3.eth.contract(CONTRACT.abi).at(contractAddress);
-      contract.addProsumers(boxAdress, psysicalAddress, isAvailable, sellPrice, buyPrice, { from: userAddress, gas: 2500000 }, (err, result) => {
+      contract.addProsumers(boxAdress, psysicalAddress, isAvailable, sellPrice*100, buyPrice*100, chargingContractListHash, { from: userAddress, gas: 2500000 }, (err, result) => {
         if (err) {
           return reject(err);
         }
         let txhash = result;
         let filter = web3.eth.filter('latest');
         filter.watch(function (error) {
-          if (error) reject(error);
+          if (error) {
+            reject(error);
+          }
           let receipt = web3.eth.getTransactionReceipt(txhash);
           if (receipt && receipt.transactionHash == txhash) {
             filter.stopWatching();
@@ -44,7 +46,7 @@ class HomeGridService {
   addConsumers(userAddress, contractAddress, psysicalAddress, isAvailable, buyPrice, chargingContractListHash) {
     return new Promise((resolve, reject) => {
       let contract = web3.eth.contract(CONTRACT.abi).at(contractAddress);
-      contract.addConsumers(psysicalAddress, isAvailable, buyPrice, { from: userAddress, gas: 2500000 }, (err, result) => {
+      contract.addConsumers(psysicalAddress, isAvailable, buyPrice*100, chargingContractListHash, { from: userAddress, gas: 2500000 }, (err, result) => {
         if (err) {
           return reject(err);
         }
@@ -96,16 +98,15 @@ class HomeGridService {
       let contract = web3.eth.contract(CONTRACT.abi).at(contractAddress);
       let len = contract.prosumersLength();
       let returnList = [];
-
       for (let i = 1; i < len; i++) {
-        let o = contract.prosumers[i];
+        let o = contract.prosumers(i);
         let item = {
           box: o[0],
           home: o[1],
           psysicalAddress: o[2],
           available: o[3],
-          sellPrice: o[4],
-          buyPrice: o[5]
+          sellPrice: o[4]/100,
+          buyPrice: o[5]/100
         }
         returnList.push(item);
       }
@@ -116,16 +117,16 @@ class HomeGridService {
   getHomeGridConsumers(contractAddress) {
     return new Promise((resolve, reject) => {
       let contract = web3.eth.contract(CONTRACT.abi).at(contractAddress);
-      let len = contract.consumersPosition();
+      let len = contract.consumersLength();
       let returnList = [];
 
       for (let i = 1; i < len; i++) {
-        let o = contract.consumers[i];
+        let o = contract.consumers(i);
         let item = {
           home: o[0],
           psysicalAddress: o[1],
           available: o[2],
-          buyPrice: o[3]
+          buyPrice: o[3]/100
         }
         returnList.push(item);
       }
@@ -140,6 +141,7 @@ class HomeGridService {
         if (err) {
           return reject(err);
         }
+        result.buyPrice = result.buyPrice/100;
         resolve(result);
       });
     });
@@ -152,6 +154,8 @@ class HomeGridService {
         if (err) {
           return reject(err);
         }
+        result.buyPrice = result.buyPrice/100;
+        result.sellPrice = result.sellPrice/100;
         resolve(result);
       });
     });
@@ -165,6 +169,7 @@ class HomeGridService {
         if (err) {
           return reject(err);
         }
+        result.buyPrice = result.buyPrice/100;
         resolve(result);
       });
     });
@@ -177,11 +182,22 @@ class HomeGridService {
         if (err) {
           return reject(err);
         }
+        result.buyPrice = result.buyPrice/100;
+        result.sellPrice = result.sellPrice/100;
         resolve(result);
       });
     });
   }
 
+  getAccounts() {
+    return new Promise((resolve, reject) => {
+      let accounts = web3.eth.accounts;
+      /*for (let i = 0; i < accounts.length; i++) {
+        web3.personal.unlockAccount(accounts[i], "test");
+      }*/
+      resolve(accounts);
+    });
+  }
 
 }
 module.exports = new HomeGridService();

@@ -13,6 +13,7 @@ app.use(bodyParser.json({ limit: '500mb' }));
 
 require('./api/homeGrid')(app);
 require('./api/charging')(app);
+require('./api/eth')(app);
 require('./api/user')(app);
 
 app.listen(process.env.NODE_PORT, () => {

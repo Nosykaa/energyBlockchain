@@ -5,12 +5,7 @@ controllers
 	$scope.loadingFreePlace = false;
 	$scope.sendPlace = false;
 
-    var deferred = $q.defer();
-    $http.get(API_URL +'/balance/' + user.keystore.address, function (err, res) {
-        $scope.balance = res.ethBalance;
-    }.error(function (err) {
-        deferred.reject(err);
-    }));
+
 
 	$scope.freeMyPlace = function () {
             if ($rootScope.swing) {

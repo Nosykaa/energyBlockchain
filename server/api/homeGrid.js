@@ -7,7 +7,7 @@
 const blockchainService = require('../services/blockchain/homeGrid');
 const apiHelper = require('./helper');
 
-module.exports = (app, ioClient) => {
+module.exports = (app) => {
 
   app.post('/homeGrid/deploy', (req, res) => {
     if (!req.body.userAddress)

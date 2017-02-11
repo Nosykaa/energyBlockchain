@@ -11,11 +11,31 @@ app.use(cors());
 app.use(bodyParser.json({ limit: '500mb' }));
 
 
-require('./api/oracle')(app);
-require('./api/watch')(app);
+require('./api/homeGrid')(app);
+require('./api/charging')(app);
 
 app.listen(process.env.NODE_PORT, () => {
-    console.log('Blockchain listening on localhost');
-    blockchain.connect();
-    console.log('Validator App listenning on port ' + process.env.NODE_PORT);
+  console.log('Server Trade-E App listenning on port ' + process.env.NODE_PORT);
+  blockchain.connect();
+  initFactory();
 });
+
+
+function initFactory() {
+  let database = require('./services/db');
+  database.getDb()
+  .then(db => {
+
+      db.collection('identity').insertOne({
+        "keystore_public_address": "0x2574ee585b9cb0da4df5e8c8a279bb4760282e6b",
+        "keystore_private_address": "6e65908741a60e14d2ea18876870ca2fd70109dd088d3c07ff15acadbb385f57"
+      }, err => {
+        if (err) {
+          throw err;
+        }
+      });
+    })
+  .catch(err => {
+    throw err;
+  });
+}

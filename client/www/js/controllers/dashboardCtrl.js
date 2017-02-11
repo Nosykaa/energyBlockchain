@@ -7,32 +7,55 @@ controllers
     $scope.isLoading = false;
     $scope.dispache = false;
     $scope.energyPrice = 0;
-    $scope.carList = [];
+    $scope.moneyEarned = 22;
+
+    $scope.carList = [
+        {
+            moneyEarned:15,
+            energyTransferred:"2 kWh",
+            energyChargeTime:"8 minutes"
+        },
+        {
+            moneyEarned:20,
+            energyTransferred:"1 kWh",
+            energyChargeTime:"240 minutes"
+        },
+        {
+            moneyEarned:22,
+            energyTransferred:"3 kWh",
+            energyChargeTime:"400 minutes"
+        },
+        {
+            moneyEarned:33,
+            energyTransferred:"2 kWh",
+            energyChargeTime:"80 minutes"
+        },
+        {
+            moneyEarned:12,
+            energyTransferred:"15 kWh",
+            energyChargeTime:"300 minutes"
+        }
+    ];
 
     /**
     * Fake data setup for all money graphs. Services to be created.
     */
-    $scope.labels3 = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
-    $scope.data3 = [300, 500, 100];
+    $scope.moneylabels = ["Ma", "Di", "Wo", "Do", "Vr", "Za", "Zo"];
+    $scope.moneylabels2 = ["Ma", "Di", "Wo", "Do", "Vr", "Za", "Zo"];
+    $scope.etdonutlabels = ["Energy Sold", "Energy Used", "Rest"];
 
-    $scope.etdonut = [300, 500, 100];
-    $scope.etdonutlabels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
-
-    $scope.data = [
-        [65, 59, 80, 81, 56, 55, 40],
-        [28, 48, 40, 19, 86, 27, 90]
+    $scope.etdonut = [5, 60, 35];
+    $scope.moneyline = [
+        [15, 20, 22, 33, 12, 33, 9]
+    ];
+    $scope.moneyline2 = [
+        [15, 20, 22, 33, 12, 33, 9],
+        [34, 80, 34, 56, 24, 55, 87],
+        [100, 200, 78, 300, 96, 500, 200]
     ];
 
-    $scope.data2 = [
-        [65, 59, 80, 81, 56, 55, 40],
-        [28, 48, 40, 19, 86, 27, 90]
-    ];
-
-    $scope.labels = ["Ma", "Di", "Wo", "Do", "Vr", "Za", "Zo"];
-    $scope.labels2 = ["Ma", "Di", "Wo", "Do", "Vr", "Za", "Zo"];
-
-    $scope.series = ['Last Year','Last Month','This Week', 'Last Week'];
-    $scope.series2 = ['Last Year','Last Month','This Week', 'Last Week'];
+    $scope.moneyseries1 = ['Last Year','Last Month','This Week', 'Last Week'];
+    $scope.moneyseries2 = ['Last Year','Last Month','This Week', 'Last Week'];
 
     $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
     $scope.options = {
@@ -82,8 +105,6 @@ controllers
     // };
 
     DashboardData.get_money().then(function(data){
-        console.log('dashdata')
-        console.log(data);
         $scope.energyPrice = data[0].buyPrice;
     }).catch(error => {
         console.log('error')

@@ -86,37 +86,37 @@ module.exports = (app) => {
   app.get('/homeGrid/:contractAddress/prosumers', (req, res) => {
     blockchainService.getHomeGridProsumers(req.params.contractAddress)
       .then(prosumers => res.status(200).send(prosumers))
-      .catch(err => apiHelper.formatError(res, 500, err));
+      .catch(err => apiHelper.formatError(res, err));
   });
 
   app.get('/homeGrid/:contractAddress/consumers', (req, res) => {
     blockchainService.getHomeGridConsumers(req.params.contractAddress)
       .then(consumers => res.status(200).send(consumers))
-      .catch(err => apiHelper.formatError(res, 500, err));
+      .catch(err => apiHelper.formatError(res, err));
   });
 
   app.get('/homeGrid/:contractAddress/consumer/:consumerAddress', (req, res) => {
     blockchainService.getConsumer(req.params.contractAddress, req.params.consumerAddress)
       .then(consumer => res.status(200).send(consumer))
-      .catch(err => apiHelper.formatError(res, 500, err));
+      .catch(err => apiHelper.formatError(res, err));
   });
 
   app.get('/homeGrid/:contractAddress/prosumer/:prosumerAddress', (req, res) => {
     blockchainService.getProsumer(req.params.contractAddress, req.params.prosumerAddress)
       .then(prosumer => res.status(200).send(prosumer))
-      .catch(err => apiHelper.formatError(res, 500, err));
+      .catch(err => apiHelper.formatError(res, err));
   });
 
   app.get('/homeGrid/:contractAddress/prosumerByBox/:boxAddress', (req, res) => {
     blockchainService.getProsumerByBox(req.params.contractAddress, req.params.boxAddress)
       .then(prosumer => res.status(200).send(prosumer))
-      .catch(err => apiHelper.formatError(res, 500, err));
+      .catch(err => apiHelper.formatError(res, err));
   });
 
  app.get('/homeGrid/:contractAddress/consumerByBox/:boxAddress', (req, res) => {
     blockchainService.getProsumerByBox(req.params.contractAddress, req.params.boxAddress)
       .then(prosumer => res.status(200).send(prosumer))
-      .catch(err => apiHelper.formatError(res, 500, err));
+      .catch(err => apiHelper.formatError(res, err));
   });
 
 };

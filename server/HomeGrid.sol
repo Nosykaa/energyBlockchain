@@ -32,31 +32,11 @@ contract HomeGrid {
     uint prosumersLength;
     uint consumersLength;
     
-    /**
-     * This event is used for standard change notification messages and outputs the following:
-     * - event function sender
-     * - event status level
-     * - event message body
-     */
-    event ChangeNotification(address indexed sender, uint status, string notificationMsg);
-
-    /**
-     * This function is used to send events.
-     * Status Level Scale:
-     *  1   Error: error conditions
-     *  2   Warning: warning conditions
-     *  3   Significant Change: Significant change to condition
-     *  4   Informational: informational messages
-     *  5   Verbose: debug-level messages
-     */
-    function sendEvent(address _sender, uint _status, string _notification) internal returns(bool) {
-        ChangeNotification(_sender, _status, _notification);
-        return true;
-    }
+    event Debug(uint index);
     
     function HomeGrid(){
-        prosumers.push(Prosumer(0, 0, "0", false, 0, 0));
-        consumers.push(Consumer(0, "0", false, 0));
+        prosumers.push(Prosumer(0, 0, "0", false, 0, 0, 0));
+        consumers.push(Consumer(0, "0", false, 0, 0));
         prosumersLength=prosumers.length;
         consumersLength=consumers.length;
     }
@@ -66,15 +46,14 @@ contract HomeGrid {
        prosumersPosition[msg.sender] = prosumersLength;
        prosumersBoxPosition[box] = prosumersLength;
        prosumersLength= prosumers.length;
-       sendEvent(msg.sender, 4, "This prosumer home is now created");
+       Debug(prosumersLength);
     }
     
     function addConsumers(string psysicalAddress, bool available, uint buyPrice, bytes32 chargingContractListHash) { 
        consumers.push(Consumer(msg.sender, psysicalAddress, available, buyPrice, chargingContractListHash));
        consumersPosition[msg.sender] = consumersLength;
-       consumersBoxPosition[box] = consumersLength;
        consumersLength = consumers.length;
-       sendEvent(msg.sender, 4, "This consumer home is now created");
+       Debug(consumersLength);
     }
     
     function updateHome(uint sellPrice, uint buyPrice, bool available, bool isProsumer, bytes32 chargingContractListHash) {
@@ -86,20 +65,16 @@ contract HomeGrid {
                 prosumers[pos].sellPrice = sellPrice;
                 prosumers[pos].buyPrice = buyPrice;
                 prosumers[pos].chargingContractListHash = chargingContractListHash;                
-                sendEvent(msg.sender, 4, "This prosumer home is now updated");
-            } else {
-                sendEvent(msg.sender, 1, "This wallet is not the owner of the prosumer house");
-            }
+                ChangeNotification(msg.sender, 4, "This prosumer home is now updated");
+            } 
         } else {
             pos = consumersPosition[msg.sender];
              if (msg.sender == prosumers[pos].home && pos != 0) {
                 consumers[pos].available = available;
                 consumers[pos].buyPrice = buyPrice;
                 consumers[pos].chargingContractListHash = chargingContractListHash;
-                sendEvent(msg.sender, 4, "This consumer home is now updated");
-            } else {
-                sendEvent(msg.sender, 1, "This wallet is not the owner of the consumer house");
-            }
+                ChangeNotification(msg.sender, 4, "This consumer home is now updated");
+            } 
         }
     }
 
@@ -119,7 +94,7 @@ contract HomeGrid {
     }
 
     function getConsumerByBox(address box) constant returns(address, string, bool, uint, bytes32){
-        uint pos = consumersBoxPosition[home];
+        uint pos = consumersBoxPosition[box];
         return (consumers[pos].home,  consumers[pos].psysicalAddress,  consumers[pos].available, consumers[pos].buyPrice, consumers[pos].chargingContractListHash);
     }
 }

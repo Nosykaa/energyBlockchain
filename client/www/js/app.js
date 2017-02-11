@@ -93,6 +93,43 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         templateUrl: "templates/oauthcallback.html",
         controller: "ProfileCtrl"
     })
+	.state('homedashboard', {
+		url: "/dashboard",
+		cache: false,
+		templateUrl: "templates/dashboard.html",
+		controller: "DashboardCtrl"
+	})
+	.state('listofcars', {
+		url: "/listofcars",
+		cache: false,
+		templateUrl: "templates/listofcars.html",
+		controller: "DashboardCtrl"
+	})
+	.state('moneyearned', {
+		url: "/moneyearned",
+		cache: false,
+		templateUrl: "templates/moneyearned.html",
+		controller: "DashboardCtrl"
+	})
+	.state('energytradeoff', {
+		url: "/energytradeoff",
+		cache: false,
+		templateUrl: "templates/energytradeoff.html",
+		controller: "DashboardCtrl"
+	})
+	.state('currentenergyprices', {
+		url: "/currentenergyprices",
+		cache: false,
+		templateUrl: "templates/currentenergyprices.html",
+		controller: "DashboardCtrl"
+	})
+	.state('myhomesettings', {
+		url: "/myhomesettings",
+		cache: false,
+		templateUrl: "templates/myhomesettings.html",
+		controller: "DashboardCtrl"
+	})
+
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/home');
 

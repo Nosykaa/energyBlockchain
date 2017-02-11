@@ -27,10 +27,10 @@ contract HomeGrid {
     mapping(address => uint) prosumersBoxPosition;
     mapping(address => uint) consumersBoxPosition;
     
-    Prosumer[] prosumers;
-    Consumer[] consumers;
-    uint prosumersLength;
-    uint consumersLength;
+    Prosumer[] public prosumers;
+    Consumer[] public consumers;
+    uint public prosumersLength;
+    uint public consumersLength;
     
     event Debug(uint index);
     
@@ -64,8 +64,8 @@ contract HomeGrid {
                 prosumers[pos].available = available;
                 prosumers[pos].sellPrice = sellPrice;
                 prosumers[pos].buyPrice = buyPrice;
-                prosumers[pos].chargingContractListHash = chargingContractListHash;                
-                ChangeNotification(msg.sender, 4, "This prosumer home is now updated");
+                prosumers[pos].chargingContractListHash = chargingContractListHash; 
+                Debug(1);
             } 
         } else {
             pos = consumersPosition[msg.sender];
@@ -73,7 +73,7 @@ contract HomeGrid {
                 consumers[pos].available = available;
                 consumers[pos].buyPrice = buyPrice;
                 consumers[pos].chargingContractListHash = chargingContractListHash;
-                ChangeNotification(msg.sender, 4, "This consumer home is now updated");
+                Debug(1);
             } 
         }
     }

@@ -98,7 +98,7 @@ class HomeGridService {
       let contract = web3.eth.contract(CONTRACT.abi).at(contractAddress);
       let len = contract.prosumersLength();
       let returnList = [];
-      for (let i = 0; i < len; i++) {
+      for (let i = 1; i < len; i++) {
         let o = contract.prosumers(i);
         let item = {
           box: o[0],

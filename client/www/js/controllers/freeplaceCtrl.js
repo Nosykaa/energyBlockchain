@@ -1,5 +1,5 @@
 controllers
-.controller('FreePlaceCtrl', ['$scope', '$rootScope', '$http', '$ionicPopup', '$timeout','$q' 'Place', 'GeoLocalisation',
+.controller('FreePlaceCtrl', ['$scope', '$rootScope', '$http', '$ionicPopup', '$timeout','$q', 'Place', 'GeoLocalisation',
                               function ($scope, $rootScope, $http, $ionicPopup, $timeout,$q, Place, GeoLocalisation) {
 
 	$scope.loadingFreePlace = false;

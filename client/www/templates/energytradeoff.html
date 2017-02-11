@@ -1,9 +1,29 @@
 <ion-view view-title="Energy Trade-Off">
     <ion-nav-title>
         <!-- <img style="margin-top: 3px;" width="250" src="img/logo_slogan.png"/> -->
-        <div style="font-family:HelveticaNeue">I'm giving back...</div>
+        <div style="font-family:HelveticaNeue">Energy Trade-Off</div>
     </ion-nav-title>
     <ion-content>
-        <div>Content Baby</div>
+        <div style="position: absolute; left: 0; right: 0; top: 0; margin-top: 50px; bottom: 0; text-align: center;">
+            <div ng-if="dispache" style="position: absolute; top: 25%; text-align: center; left:0; right:0;"><img height="128" src="img/splash.gif"/></div>
+            <div class="row">
+                <div id="doughnut-graph-dash">
+                    <div style="font-family:HelveticaNeue;padding-bottom:25px;">Overproduction in %</div>
+                    <canvas id="doughnut" class="chart chart-doughnut"
+                      chart-data="etdonut" chart-labels="etdonutlabels">
+                    </canvas>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-center">
+                    <button id="energy-tradeoff-buttons" ng-class="{'zoomOutRight':dispache,'zoomInRight':rassemble}" ng-click="energytradeoff()" class="animated button button-menu button-borne-electrique">
+                        <i class="ion-ios-bolt"></i>
+                    </button>
+                    <button id="energy-tradeoff-buttons" ng-class="{'button-stable':swing,'zoomOutLeft':dispache,'zoomInLeft':rassemble}" ng-click="moneyEarned()" class="animated button button-menu button-libere-place">
+                        <i class="ion-ios-calculator" ng-class="{'swing':swing}"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
     </ion-content>
 </ion-view>

@@ -264,3 +264,9 @@
   border: 1px solid #f79f8b;
   padding: 5px;
 }
+
+
+#dashboard-content {
+    background-color:#F0F0F0;
+    height: 100%;
+}

@@ -11,9 +11,10 @@
 var API_URL = "http://localhost:3000";
 
 
-angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter.services', 'ngOpenFB'])
 
-.run(['$ionicPlatform', '$rootScope', '$timeout', '$cordovaNetwork', '$cordovaDialogs', '$ionicLoading', '$window', 'Config', 'GeoLocalisation', 'User', function($ionicPlatform, $rootScope, $timeout, $cordovaNetwork, $cordovaDialogs, $ionicLoading, $window, Config, GeoLocalisation, User) {
+.run(['$ionicPlatform', '$rootScope', '$timeout', '$cordovaNetwork', '$cordovaDialogs', '$ionicLoading', '$window', 'Config', 'Authentification', 'GeoLocalisation', 'User', 'ngFB', function($ionicPlatform, $rootScope, $timeout, $cordovaNetwork, $cordovaDialogs, $ionicLoading, $window, Config, Authentification, GeoLocalisation, User, ngFB) {
+	ngFB.init({appId: '1685882724989351'});
 	$ionicPlatform.ready(function() {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -27,6 +28,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         /**
          * Déclaration des variables rootScope
          */
+        $rootScope.auth = Authentification;
         $rootScope.config = Config;
         $rootScope.myUser = {};
 
@@ -40,6 +42,14 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     $ionicConfigProvider.tabs.position('bottom');
     $ionicConfigProvider.tabs.style('standard');
     $ionicConfigProvider.backButton.text('Retour');
+    //$ionicConfigProvider.views.maxCache(0);
+
+
+    /**
+     * Http config
+     */
+    //$httpProvider.defaults.timeout = 8000;
+    $httpProvider.interceptors.push('TokenInterceptor');
 
     /**
      * Router config
@@ -77,8 +87,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         templateUrl: "templates/profile.html",
         controller: "ProfileCtrl"
     })
-<<<<<<< HEAD
-=======
     .state('oauthcallback', {
         url: "/oauthcallback",
         cache: false,
@@ -121,7 +129,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
 		templateUrl: "templates/myhomesettings.html",
 		controller: "DashboardCtrl"
 	})
->>>>>>> fbf131764aaeb685b375e5f86728f33821a51726
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/home');

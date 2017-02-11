@@ -15,10 +15,6 @@
                     {{item.name}}
                     <span class="badge badge-stable">{{item.freePlaces}} places</span>
                 </span>
-                <span ng-if="item.type=='public'">
-                    Place vacante
-                    <span class="badge badge-stable">{{item.proba*100|number:0}}%</span>
-                </span>
             </ion-item>
             <ion-item ng-hide="place.payingPark" ng-class="{'item-assertive':(item.type=='private' && item.freePlaces<=2) || (item.type=='public' && item.proba<=0.3),'item-energized':(item.type=='private' && item.freePlaces>2 && item.freePlaces<=10) || (item.type=='public' && item.proba>0.3 && item.proba<=0.7),'item-balanced':(item.type=='private' && item.freePlaces>10) || (item.type=='public' && item.proba>0.7)}" ng-click="choicePlace(item)" ng-class="" ng-repeat="item in items | orderBy:'-freePlace' | orderBy:'-proba' | filter:{'type':'public'} | limitTo:3">
                 <img ng-if="item.type=='private'" height="20" src="img/private.png">

@@ -1,6 +1,6 @@
 <ion-modal-view>
     <ion-header-bar>
-        <h1 class="title">Paramètres</h1>
+        <h1 class="title">Parameter</h1>
         <button class="button button-clear button-positive" ng-click="modalParametres.hide()">
             <i class="icon ion-ios-close-empty"></i>
         </button>
@@ -9,7 +9,7 @@
       <div class="list">
         <ion-toggle ng-model="payingPark" ng-checked="payingPark" ng-change="setPaying(payingPark)">Parking Payant</ion-toggle>
         <div class="item item-divider">
-          Rayon de recherche : {{radius}} m
+          Radius : {{radius}} m
         </div>
         <div class="item range">
           <i class=" ">10</i>
@@ -17,7 +17,7 @@
           <i class=" ">1000</i>
         </div>
         <div class="item item-divider">
-          Limite du nombre de parkings cherchés : {{limit}}
+          How many wallbox want to appear in the research: {{limit}}
         </div>
         <div class="item range">
           <i class=" ">1</i>

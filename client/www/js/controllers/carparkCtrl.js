@@ -2,6 +2,25 @@ controllers
 .controller('CarParkCtrl', ['$rootScope', '$scope', '$ionicPlatform', '$ionicPopup', '$cordovaGeolocation', '$state', '$timeout', 'Place', 'GeoLocalisation',
     function ($rootScope, $scope, $ionicPlatform, $ionicPopup, $cordovaGeolocation, $state, $timeout, Place, GeoLocalisation) {
 
+        var options = {timeout: 10000, enableHighAccuracy: true};
+
+         $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+
+           var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+           var mapOptions = {
+             center: latLng,
+             zoom: 15,
+             mapTypeId: google.maps.MapTypeId.ROADMAP
+           };
+
+           $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+         }, function(error){
+           console.log("Could not get location");
+         });
+
+
         $scope.place = Place;
         console.log($scope.place.payingPark);
 
@@ -62,14 +81,13 @@ controllers
     $scope.loadingCarPark = true;
     $rootScope.loading.show();
 
-    // if(Place.payingPark){
       GeoLocalisation.getPosition().then(function (position) {
           Place.findFreePlacesLimit(position.coords.latitude, position.coords.longitude, Place.radius, Place.limit).success(function (data) {
               $rootScope.loading.hide();
               if (data.length == 0) {
                   $ionicPopup.alert({
-                      title: 'Problème',
-                      template: 'Aucun parking ou place disponible dans les environs...'
+                      title: 'Problem',
+                      template: 'No wallbox available..'
                   }).then(function(res) {
                       $state.go('home');
                   });

@@ -8,31 +8,10 @@
             <div ng-if="dispache" style="position: absolute; top: 25%; text-align: center; left:0; right:0;"><img height="128" src="img/splash.gif"/></div>
             <div class="row">
                 <div class="col">
+                    <div style="font-family:HelveticaNeue"><h3>Current Price KwH</h3></div>
                     <button id="current-price-buttons" ng-class="{'zoomOutRight':dispache,'zoomInRight':rassemble}" ng-click="energytradeoff()" class="animated button button-menu button-borne-electrique">
                         <i class="ion-social-bitcoin"></i>
-                    </button>
-                    <button id="current-price-buttons" ng-class="{'button-stable':swing,'zoomOutLeft':dispache,'zoomInLeft':rassemble}" ng-click="moneyEarned()" class="animated button button-menu button-libere-place">
-                        <i class="ion-social-bitcoin" ng-class="{'swing':swing}"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col col-center">
-                    <button id="current-price-buttons" ng-class="{'button-stable':swing,'zoomOutLeft':dispache,'zoomInLeft':rassemble}" ng-click="moneyEarned()" class="animated button button-menu button-libere-place">
-                        <i class="ion-social-bitcoin" ng-class="{'swing':swing}"></i>
-                    </button>
-                    <button id="current-price-buttons" ng-class="{'zoomOutRight':dispache,'zoomInRight':rassemble}" ng-click="energytradeoff()" class="animated button button-menu button-borne-electrique">
-                        <i class="ion-social-bitcoin"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col col-center">
-                    <button id="current-price-buttons" ng-class="{'zoomOutRight':dispache,'zoomInRight':rassemble}" ng-click="energytradeoff()" class="animated button button-menu button-borne-electrique">
-                        <i class="ion-social-bitcoin"></i>
-                    </button>
-                    <button id="current-price-buttons" ng-class="{'button-stable':swing,'zoomOutLeft':dispache,'zoomInLeft':rassemble}" ng-click="moneyEarned()" class="animated button button-menu button-libere-place">
-                        <i class="ion-social-bitcoin" ng-class="{'swing':swing}"></i>
+                        <div style="padding-top:15px">{{energyPrice}}</div>
                     </button>
                 </div>
             </div>

@@ -125,6 +125,8 @@ controllers
     $scope.amountCharged = "";
     $scope.cost = "";
     $scope.chargingContractAddress = "";
+    $scope.status = "Waiting to start";
+
     $scope.start = function() {
         console.log('start');
         DashboardData.get_user().then(function(box){
@@ -165,6 +167,8 @@ controllers
                                             $scope.boxBalance = data.boxBalance;
                                             $scope.carBalance = data.carBalance;
                                             $scope.homeBalance = data.homeBalance;
+                                            $scope.cost = 1;
+                                            $scope.status = "Waiting confirmation of the car driver";
                                         }).catch(error => {
                                             console.log('error')
                                             console.log(error);
@@ -197,15 +201,14 @@ controllers
 
     $scope.confirm = function() {
         console.log('confirm');
-        var amountToKeep = 50;
+        var amountToKeep = 20;
         DashboardData.confirm_charge($scope.carAddress, $scope.chargingContractAddress, amountToKeep).then(function(result){
             console.log('confirm_charge')
-            console.log(result)
-            $scope.cost = amountToKeep;
             DashboardData.updateBalance($scope.boxAddress, $scope.homeAddress, $scope.carAddress).then(function(data){
                 $scope.boxBalance = data.boxBalance;
                 $scope.carBalance = data.carBalance;
                 $scope.homeBalance = data.homeBalance;
+                $scope.status = "Recharging in progress";
             }).catch(error => {
                 console.log('error')
                 console.log(error);
@@ -229,6 +232,7 @@ controllers
                     console.log('confirm_charge')
                     console.log(result)
                     $scope.amountCharged = endMeterReading;
+                    $scope.status = "Recharging finished";
                     DashboardData.updateBalance($scope.boxAddress, $scope.homeAddress, $scope.carAddress).then(function(data){
                         $scope.boxBalance = data.boxBalance;
                         $scope.carBalance = data.carBalance;

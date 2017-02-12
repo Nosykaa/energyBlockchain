@@ -164,7 +164,7 @@ controllers
     $scope.confirm = function() {
         console.log('confirm');
         var amountToKeep = 15;
-        DashboardData.confirm_charge($scope.boxAddress,$scope.chargingContractAddress,amountToKeep).then(function(result){
+        DashboardData.confirm_charge($scope.carAddress,$scope.chargingContractAddress,amountToKeep).then(function(result){
             console.log('confirm_charge')
             console.log(result)
         }).catch(error => {

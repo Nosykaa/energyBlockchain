@@ -90,19 +90,17 @@ services.factory('DashboardData', ['$http', '$q', 'Config', function ($http, $q,
             });
             return deferred.promise;
         },
-        confirm_charge: function (userAddress,contractAddress,amountToKeep) {
+        confirm_charge: function (carAddress,contractAddress,amountToKeep) {
             var deferred = $q.defer();
 
-            // var user = {};
-            // user['chargingHistory'] = [];
             var body = {
                 amountToKeep:amountToKeep,
-                userAddress:userAddress
+                userAddress:carAddress
             };
 
             var req = {
                 method: 'POST',
-                url: 'http://localhost:5000/charging/' + contractAddress + '/chargeStarted',
+                url: 'http://localhost:5000/charging/' + carAddress + '/chargeStarted',
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -128,7 +126,7 @@ services.factory('DashboardData', ['$http', '$q', 'Config', function ($http, $q,
 
             var req = {
                 method: 'POST',
-                url: 'http://localhost:5000/charging/' + contractAddress + '/chargeCompleted',
+                url: 'http://localhost:5000/charging/' + userAddress + '/chargeCompleted',
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -157,7 +155,7 @@ services.factory('DashboardData', ['$http', '$q', 'Config', function ($http, $q,
             }).error(function (err) {
                 deferred.reject(err);
             });
-            
+
             return deferred.promise;
         },
         updateBalance: function (boxAddress, homeAddress, carAddress) {

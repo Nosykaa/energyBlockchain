@@ -177,7 +177,7 @@ controllers
                                     console.log('error')
                                     console.log(error);
                                 });
-                    
+
 
                 }).catch(error => {
                     console.log('error')
@@ -200,7 +200,7 @@ controllers
         var amountToKeep = 50;
         DashboardData.confirm_charge($scope.carAddress, $scope.chargingContractAddress, amountToKeep).then(function(result){
             console.log('confirm_charge')
-            console.log(result) 
+            console.log(result)
             $scope.cost = amountToKeep;
             DashboardData.updateBalance($scope.boxAddress, $scope.homeAddress, $scope.carAddress).then(function(data){
                 $scope.boxBalance = data.boxBalance;
@@ -228,7 +228,7 @@ controllers
                 .then(function(result){
                     console.log('confirm_charge')
                     console.log(result)
-                    $scope.amountCharged = endMeterReading; 
+                    $scope.amountCharged = endMeterReading;
                     DashboardData.updateBalance($scope.boxAddress, $scope.homeAddress, $scope.carAddress).then(function(data){
                         $scope.boxBalance = data.boxBalance;
                         $scope.carBalance = data.carBalance;

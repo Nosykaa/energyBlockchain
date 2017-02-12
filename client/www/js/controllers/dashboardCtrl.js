@@ -112,38 +112,72 @@ controllers
     $scope.boxAddress = "";
     $scope.carAddress = "";
     $scope.homeAddress = "";
+
+    DashboardData.updateBalance($scope.boxAddress, $scope.homeAddress, $scope.carAddress).then(function(data){
+        $scope.boxBalance = data.boxBalance;
+        $scope.carBalance = data.carBalance;
+        $scope.homeBalance = data.homeBalance;
+    }).catch(error => {
+        console.log('error')
+        console.log(error);
+    });
+
+    $scope.amountCharged = "";
+    $scope.cost = "";
     $scope.chargingContractAddress = "";
     $scope.start = function() {
         console.log('start');
         DashboardData.get_user().then(function(box){
             $scope.boxAddress = box.address;
             console.log('get_user')
-            console.log(box.address)
+            console.log("box.address" + box.address)
 
             DashboardData.get_car().then(function(car){
                 $scope.carAddress = car.address;
                 console.log('get_car')
-                console.log(car.address)
+                console.log("car.address" + car.address)
 
                 DashboardData.get_prosumer_address().then(function(prosumer){
                     $scope.homeAddress = prosumer.address;
                     console.log('get_prosumer_address')
-                    console.log(prosumer.address)
-
-                    DashboardData.saveUserContract($scope.boxAddress,
+                    console.log("prosumer.address" + prosumer.address)
+                    //Deploy contract
+                    DashboardData.startContractBlockchain($scope.boxAddress,
                                                    $scope.homeAddress,
                                                    $scope.carAddress,
                                                    1,
-                                                   $scope.chargingContractAddress)
+                                                   0)
                                 .then(function(chargingContractAddress){
                                     $scope.chargingContractAddress = chargingContractAddress;
-                                    console.log('save contract')
+                                    console.log('deploy contract')
                                     console.log(chargingContractAddress)
-
+                                    DashboardData.saveUserContract($scope.boxAddress,
+                                                    $scope.homeAddress,
+                                                    $scope.carAddress,
+                                                    1,
+                                                    0,
+                                                    $scope.chargingContractAddress,
+                                                    prosumer)
+                                    .then(function(user){
+                                        console.log('save contract in db')
+                                        console.log(user)
+                                        DashboardData.updateBalance($scope.boxAddress, $scope.homeAddress, $scope.carAddress).then(function(data){
+                                            $scope.boxBalance = data.boxBalance;
+                                            $scope.carBalance = data.carBalance;
+                                            $scope.homeBalance = data.homeBalance;
+                                        }).catch(error => {
+                                            console.log('error')
+                                            console.log(error);
+                                        });
+                                    }).catch(error => {
+                                        console.log('error')
+                                        console.log(error);
+                                    });
                                 }).catch(error => {
                                     console.log('error')
                                     console.log(error);
                                 });
+
 
                 }).catch(error => {
                     console.log('error')
@@ -164,9 +198,18 @@ controllers
     $scope.confirm = function() {
         console.log('confirm');
         var amountToKeep = 15;
-        DashboardData.confirm_charge($scope.carAddress,$scope.chargingContractAddress,amountToKeep).then(function(result){
+        DashboardData.confirm_charge($scope.carAddress, $scope.chargingContractAddress, amountToKeep).then(function(result){
             console.log('confirm_charge')
             console.log(result)
+            $scope.cost = amountToKeep;
+            DashboardData.updateBalance($scope.boxAddress, $scope.homeAddress, $scope.carAddress).then(function(data){
+                $scope.boxBalance = data.boxBalance;
+                $scope.carBalance = data.carBalance;
+                $scope.homeBalance = data.homeBalance;
+            }).catch(error => {
+                console.log('error')
+                console.log(error);
+            });
         }).catch(error => {
             console.log('error')
             console.log(error);
@@ -176,13 +219,33 @@ controllers
     $scope.finish = function() {
         console.log('finish');
         var endMeterReading = 10;
-        DashboardData.finish_charge($scope.boxAddress,$scope.chargingContractAddress,endMeterReading).then(function(result){
-            console.log('confirm_charge')
-            console.log(result)
-        }).catch(error => {
-            console.log('error')
-            console.log(error);
-        });
+        DashboardData.get_user()
+            .then(function(box){
+                $scope.boxAddress = box.address;
+                console.log('get_user')
+                console.log(box.address)
+                DashboardData.finish_charge($scope.boxAddress, $scope.chargingContractAddress, endMeterReading)
+                .then(function(result){
+                    console.log('confirm_charge')
+                    console.log(result)
+                    $scope.amountCharged = endMeterReading;
+                    DashboardData.updateBalance($scope.boxAddress, $scope.homeAddress, $scope.carAddress).then(function(data){
+                        $scope.boxBalance = data.boxBalance;
+                        $scope.carBalance = data.carBalance;
+                        $scope.homeBalance = data.homeBalance;
+                    }).catch(error => {
+                        console.log('error')
+                        console.log(error);
+                    });
+                }).catch(error => {
+                    console.log('error')
+                    console.log(error);
+                });
+            })
+            .catch(error => {
+                console.log('error')
+                console.log(error);
+            });
     }
 
 

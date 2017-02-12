@@ -11,7 +11,7 @@
 var API_URL = "http://localhost:5000";
 
 
-angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter.services', 'ngOpenFB'])
+angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter.services', 'ngOpenFB', 'chart.js'])
 
 .run(['$ionicPlatform', '$rootScope', '$timeout', '$cordovaNetwork', '$cordovaDialogs', '$ionicLoading', '$window', 'Config', 'Authentification', 'GeoLocalisation', 'User', 'ngFB', function($ionicPlatform, $rootScope, $timeout, $cordovaNetwork, $cordovaDialogs, $ionicLoading, $window, Config, Authentification, GeoLocalisation, User, ngFB) {
 	ngFB.init({appId: '1685882724989351'});
@@ -128,6 +128,12 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
 		cache: false,
 		templateUrl: "templates/myhomesettings.html",
 		controller: "DashboardCtrl"
+	})
+	.state('cockpit', {
+	    url: "/cockpit",
+	    cache: false,
+	    templateUrl: "templates/cockpit.html",
+	    controller: "DashboardCtrl"
 	})
 
     // if none of the above states are matched, use this as the fallback

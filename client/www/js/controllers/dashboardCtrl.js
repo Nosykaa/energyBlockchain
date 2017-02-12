@@ -98,11 +98,8 @@ controllers
 
 
     /**
-    * Get Data From Services
+    * Data Services
     */
-    // $scope.getFinancialInformation = function () {
-    //
-    // };
 
     DashboardData.get_money().then(function(data){
         $scope.energyPrice = data[0].buyPrice;
@@ -112,26 +109,82 @@ controllers
     });
 
 
-    //
-    //
-    //
-    //         if($rootScope.user){
-    //                 $rootScope.user.score += 6;
-    //         }
-    //         $scope.sendPlace = true;
-    //         $scope.loadingFreePlace = false;
-    //         $rootScope.loading.hide();
-    //         $ionicPopup.alert({
-    //             title: 'Merci d\'avoir signalé une place vide ;)',
-    //             template: 'Vous avez gagné 6 points !'
-    //         });
-    //         $timeout(function () {
-    //             $scope.swing = false;
-    //         }, 1000*60*5);
-    // }).error(function (err) {
-    //         $scope.sendPlace = false;
-    //         $rootScope.loading.hide();
-    // });
+    $scope.boxAddress = "";
+    $scope.carAddress = "";
+    $scope.homeAddress = "";
+    $scope.chargingContractAddress = "";
+    $scope.start = function() {
+        console.log('start');
+        DashboardData.get_user().then(function(box){
+            $scope.boxAddress = box.address;
+            console.log('get_user')
+            console.log(box.address)
+
+            DashboardData.get_car().then(function(car){
+                $scope.carAddress = car.address;
+                console.log('get_car')
+                console.log(car.address)
+
+                DashboardData.get_prosumer_address().then(function(prosumer){
+                    $scope.homeAddress = prosumer.address;
+                    console.log('get_prosumer_address')
+                    console.log(prosumer.address)
+
+                    DashboardData.saveUserContract($scope.boxAddress,
+                                                   $scope.homeAddress,
+                                                   $scope.carAddress,
+                                                   1,
+                                                   $scope.chargingContractAddress)
+                                .then(function(chargingContractAddress){
+                                    $scope.chargingContractAddress = chargingContractAddress;
+                                    console.log('save contract')
+                                    console.log(chargingContractAddress)
+
+                                }).catch(error => {
+                                    console.log('error')
+                                    console.log(error);
+                                });
+
+                }).catch(error => {
+                    console.log('error')
+                    console.log(error);
+                });
+
+            }).catch(error => {
+                console.log('error')
+                console.log(error);
+            });
+
+        }).catch(error => {
+            console.log('error')
+            console.log(error);
+        });
+    }
+
+    $scope.confirm = function() {
+        console.log('confirm');
+        var amountToKeep = 15;
+        DashboardData.confirm_charge($scope.boxAddress,$scope.chargingContractAddress,amountToKeep).then(function(result){
+            console.log('confirm_charge')
+            console.log(result)
+        }).catch(error => {
+            console.log('error')
+            console.log(error);
+        });
+    }
+
+    $scope.finish = function() {
+        console.log('finish');
+        var endMeterReading = 10;
+        DashboardData.finish_charge($scope.boxAddress,$scope.chargingContractAddress,endMeterReading).then(function(result){
+            console.log('confirm_charge')
+            console.log(result)
+        }).catch(error => {
+            console.log('error')
+            console.log(error);
+        });
+    }
+
 
     /**
     * Dashboard Routes
@@ -168,6 +221,13 @@ controllers
       $scope.dispache = true;
       $timeout(function () {
           $state.go('myhomesettings');
+      }, 1000);
+    };
+
+    $scope.cockpit = function () {
+      $scope.dispache = true;
+      $timeout(function () {
+          $state.go('cockpit');
       }, 1000);
     };
 }]);

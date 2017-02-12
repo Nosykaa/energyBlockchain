@@ -1,0 +1,27 @@
+<ion-view view-title="cockpit">
+    <div ng-controller="DashboardCtrl">
+    </div>
+    <ion-nav-title>
+        <!-- <img style="margin-top: 3px;" width="250" src="img/logo_slogan.png"/> -->
+        <div style="font-family:HelveticaNeue">Cockpit</div>
+    </ion-nav-title>
+    <ion-content>
+        <div style="position: absolute; left: 0; right: 0; top: 0; margin-top: 50px; bottom: 0; text-align: center;">
+            <div ng-if="dispache" style="position: absolute; top: 25%; text-align: center; left:0; right:0;"><img height="128" src="img/splash.gif"/></div>
+            <div class="row">
+                <div class="col">
+                    <div style="font-family:HelveticaNeue"><h3>Cockpit</h3></div>
+                    <button id="current-price-buttons" style="width:75%;" ng-click="start()" ng-class="{'zoomOutRight':dispache,'zoomInRight':rassemble}" class="animated button button-menu button-borne-electrique">
+                        <div>Start</div>
+                    </button>
+                    <button id="current-price-buttons" style="width:75%;" ng-click="confirm()" ng-class="{'zoomOutRight':dispache,'zoomInRight':rassemble}" class="animated button button-menu button-borne-electrique">
+                        <div>Confirm</div>
+                    </button>
+                    <button id="current-price-buttons" style="width:75%;" ng-click="finish()" ng-class="{'zoomOutRight':dispache,'zoomInRight':rassemble}" class="animated button button-menu button-borne-electrique">
+                        <div>Finish</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

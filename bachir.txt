@@ -1,0 +1,33 @@
+1- Pour récupérer l'ensemble des points de chargement
+  api : /homeGrid/:contractAddress/prosumers
+  return json : [
+          {
+            box: box.address,
+            home: prosumer.address,
+            psysicalAddress: "53.209022, 6.572535",
+            available: true,
+            buyPrice: 0.13,
+            sellPrice: 0.15,
+          },
+          {
+            box: box.address,
+            home: prosumer.address,
+            psysicalAddress: "53.211001, 6.572159",
+            available: true,
+            buyPrice: 0.15,
+            sellPrice: 0.17,
+          },
+          {
+            box: box.address,
+            home: prosumer.address,
+            psysicalAddress: "53.207319, 6.571741",
+            available: true,
+            buyPrice: 0.10,
+            sellPrice: 0.13,
+          },
+        ]
+2- Quand on clique sur un point d'interet sa te donne le chemin
+3- bouton pour simuler le fait que on est arrivé
+4- redirection vers la page de transaction que nous avons fait pendant que tu étais à l'hotel. 
+   (si possible trouver un moyen de passer les données dans la redirection pour avoir les addresses et le prix)
+

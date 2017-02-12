@@ -18,6 +18,7 @@ class ChargingService {
   chargeStarted(userAddress, contractAddress, amountToKeep) {
     return new Promise((resolve, reject) => {
       let contract = web3.eth.contract(CONTRACT.abi).at(contractAddress);
+      console.log(amountToKeep)
         contract.chargeStarted({ from: userAddress, gas: 2500000, value: web3.toWei(amountToKeep, 'ether') }, (err, result) => {
         if (err) {
           return reject(err);

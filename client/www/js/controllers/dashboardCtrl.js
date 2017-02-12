@@ -112,7 +112,7 @@ controllers
     $scope.boxAddress = "";
     $scope.carAddress = "";
     $scope.homeAddress = "";
-      
+
     DashboardData.updateBalance($scope.boxAddress, $scope.homeAddress, $scope.carAddress).then(function(data){
         $scope.boxBalance = data.boxBalance;
         $scope.carBalance = data.carBalance;
@@ -197,7 +197,7 @@ controllers
 
     $scope.confirm = function() {
         console.log('confirm');
-        var amountToKeep = 15;
+        var amountToKeep = 50;
         DashboardData.confirm_charge($scope.carAddress, $scope.chargingContractAddress, amountToKeep).then(function(result){
             console.log('confirm_charge')
             console.log(result) 

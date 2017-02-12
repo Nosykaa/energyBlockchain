@@ -162,11 +162,12 @@ services.factory('DashboardData', ['$http', '$q', 'Config', function ($http, $q,
         },
         updateBalance: function (boxAddress, homeAddress, carAddress) {
             var deferred = $q.defer();
-            let retunValue = {
+            var retunValue = {
                 boxBalance : "",
                 carBalance : "",
                 homeBalance : ""
             };
+            console.log(boxAddress + ", " + homeAddress + ", " + carAddress)
             $http.get(API_URL + '/balance/' + boxAddress)
             .then (function (boxBalance) {
                    retunValue.boxBalance = boxBalance.data;
@@ -176,6 +177,7 @@ services.factory('DashboardData', ['$http', '$q', 'Config', function ($http, $q,
                         $http.get(API_URL + '/balance/' + homeAddress)
                         .then (function (homeBalance) {
                             retunValue.homeBalance = homeBalance.data;
+                            console.log(retunValue);
                             deferred.resolve(retunValue);  
                         })    
                     }) 

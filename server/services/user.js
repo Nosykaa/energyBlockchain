@@ -49,7 +49,6 @@ class UserService {
               message: 'User not found. Invalid address'
             });
           }
-
           resolve(user);
         });
       }).catch(reject);

@@ -3,30 +3,30 @@
     </div>
     <ion-nav-title>
         <!-- <img style="margin-top: 3px;" width="250" src="img/logo_slogan.png"/> -->
-        <div style="font-family:HelveticaNeue">Cockpit</div>
+        <div style="font-family:HelveticaNeue">Charge Transaction</div>
     </ion-nav-title>
     <ion-content>
         <div style="position: absolute; left: 0; right: 0; top: 0; margin-top: 50px; bottom: 0; text-align: center;">
             <div ng-if="dispache" style="position: absolute; top: 25%; text-align: center; left:0; right:0;"><img height="128" src="img/splash.gif"/></div>
             <div class="row">
                 <div class="col">
-                    <div style="font-family:HelveticaNeue"><h3>Cockpit</h3></div>
-                    <div style="font-family:HelveticaNeue">Information about the charging transaction</div>
-    
-                    <div style="left:25%;">charging contract address : {{chargingContractAddress}}</div>
-                    <div style="left:25%;">€/kW/h : {{cost}}</div>
-                    <div style="left:25%;">status of the charging process : {{status}}</div>
-                     <div style="left:25%;">Amount of energy charged : {{amountCharged}}</div>
-                    <div style="left:25%;">boxAddress : {{boxAddress}}, balance : {{boxBalance}}</div>
-                    <div style="left:25%;">homeAddress : {{homeAddress}}, balance : {{homeBalance}}</div>
-                    <div style="left:25%;">carAddress : {{carAddress}}, balance : {{carBalance}}</div>
-                    <button id="current-price-buttons" style="width:75%;" ng-click="start()" ng-class="{'zoomOutRight':dispache,'zoomInRight':rassemble}" class="animated button button-menu button-borne-electrique">
+                    <div><strong>Charging address:</strong> {{chargingContractAddress}}</div><br/>
+                    <div>€/kW/h: {{cost}}</div><br/>
+                    <div><u><strong>Status:</strong> {{status}}</u></div><br/>
+                    <div>Amount of energy charged: {{amountCharged}}</div><br/>
+                    <div id="balance"><strong>boxAddress:</strong> {{boxAddress}}</div>
+                    <div>balance: {{boxBalance}}</div><br/>
+                    <div id="balance"><strong>homeAddress:</strong> {{homeAddress}}</div>
+                    <div>balance: {{homeBalance}}</div><br/>
+                    <div id="balance"><strong>carAddres:</strong> {{carAddress}}</div>
+                    <div>balance: {{carBalance}}</div></br>
+                    <button id="cockpitButton" ng-click="start()" ng-class="{'zoomOutRight':dispache,'zoomInRight':rassemble}" class="animated button">
                         <div>Start</div>
                     </button>
-                    <button id="current-price-buttons" style="width:75%;" ng-click="confirm()" ng-class="{'zoomOutRight':dispache,'zoomInRight':rassemble}" class="animated button button-menu button-borne-electrique">
+                    <button id="cockpitButton" ng-click="confirm()" ng-class="{'zoomOutRight':dispache,'zoomInRight':rassemble}" class="animated button">
                         <div>Confirm</div>
                     </button>
-                    <button id="current-price-buttons" style="width:75%;" ng-click="finish()" ng-class="{'zoomOutRight':dispache,'zoomInRight':rassemble}" class="animated button button-menu button-borne-electrique">
+                    <button id="cockpitButton" ng-click="finish()" ng-class="{'zoomOutRight':dispache,'zoomInRight':rassemble}" class="animated button">
                         <div>Finish</div>
                     </button>
                 </div>

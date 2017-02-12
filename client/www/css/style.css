@@ -305,6 +305,17 @@
     color:#46B288;
 }
 
-#carListItem {
-    
+#cockpitButton {
+    background-color:#FFFFFF;
+    border-color:#46B288;
+    color:#46B288;
+    left:10%;
+    width:25%;
+    height:75px;
+    font-size:6;
+    float:left;
+}
+
+#balance {
+    font-size: 2;
 }

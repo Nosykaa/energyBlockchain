@@ -169,7 +169,7 @@ controllers
     function convertRad(input){
             return (Math.PI * input)/180;
     }
-    
+
     /**
      * Calcul de distance
      */

@@ -1,6 +1,23 @@
 controllers
-.controller('CarParkCtrl', ['$rootScope', '$scope', '$ionicPlatform', '$ionicPopup', '$cordovaGeolocation', '$state', '$timeout', 'Place', 'GeoLocalisation',
-    function ($rootScope, $scope, $ionicPlatform, $ionicPopup, $cordovaGeolocation, $state, $timeout, Place, GeoLocalisation) {
+.controller('CarParkCtrl', ['$rootScope', '$scope', '$ionicPlatform', '$ionicPopup', '$cordovaGeolocation', '$state', '$timeout','$http','$q', 'Place', 'GeoLocalisation',
+    function ($rootScope, $scope, $ionicPlatform, $ionicPopup, $cordovaGeolocation, $state, $timeout,$http,$q, Place, GeoLocalisation) {
+
+        var items = function () {
+            var deferred = $q.defer();
+            $http.get('http://localhost:5000' + '/app/toto')
+            .success(function (homeGridAddress) {
+                $http.get('http://localhost:5000' + '/homeGrid/' + homeGridAddress + '/prosumers')
+                .success(function (data) {
+                    deferred.resolve(data);
+                }).error(function (err) {
+                    deferred.reject(err);
+                });
+            }).error(function (err) {
+                deferred.reject(err);
+            });
+
+            return deferred.promise;
+        }
 
         var options = {timeout: 10000, enableHighAccuracy: true};
 
@@ -136,16 +153,10 @@ controllers
               $rootScope.loading.hide();
               $state.go('home');
           });
-          /*
-           * Callback go home
-           */
       });
-    // } else {
-      //find payink park
-    // }
+
     $scope.launchNav = function(){
-          // var destination = [ $scope.currentItem.y, $scope.currentItem.x];
-          // var start = [$scope.currentPosition.lng() , $scope.currentPosition.lat()]
+
           window.launchnavigator.navigate("London, UK","Manchester, UK").then(function() {
             console.log("Navigator launched");
             }, function (err) {
@@ -155,24 +166,14 @@ controllers
 
     $scope.ifArrive = function(){
         console.log("Function if arrive");
-        if($scope.distance($scope.currentPos.latitude, $scope.currentPos.longitude, $scope.currentItem.y, $scope.currentItem.x, "K") < 0.1){
-            console.log("arriving soon");
-            $scope.stopTimeout();
-            $rootScope.modalFeedback.show();
-            $scope.stopRoute();
-        }
     }
 
     $scope.startTimeout = function () {
-        console.log('start1');
         GeoLocalisation.getPosition().then(function (position) {
-            console.log(position);
-            console.log('start2');
             $scope.currentPos = $scope.currentPosition;
             $scope.map.setCenter($scope.marker.getPosition());
             $scope.ifArrive();
             $scope.promiseTimeout = $timeout(function () {
-                console.log('start3');
                 $scope.startTimeout();
             }, 1500);
         });
@@ -212,14 +213,11 @@ controllers
     $scope.startRoute = function () {
         $scope.start = true;
         end_pos = new google.maps.LatLng(53.2083994,6.560158);
-
         var request = {
            origin: $scope.currentPosition,
            destination:end_pos,
            travelMode: google.maps.TravelMode.DRIVING
         };
-
-
 
         $scope.directionsService.route(request, function(result, status) {
            if (status == google.maps.DirectionsStatus.OK) {
@@ -229,14 +227,11 @@ controllers
                     $scope.steps = result.routes[0].legs[0].steps;
                     console.log($scope.steps);
                     $scope.ng = $scope.steps[0];
-                    $timeout(function() {
-                        $scope.map.setCenter($scope.currentPosition);
-                    }, 1000);
                     $timeout(function () {
                         $rootScope.modalFeedback.show();
                         $scope.stopTimeout();
                         $scope.startTimeout();
-                    }, 10000)
+                    }, 1000)
                 });
             }
         });

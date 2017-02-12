@@ -6,11 +6,10 @@ class UserService {
     return new Promise((resolve, reject) => {
       database.getDb().then(db => {
 
-        db.collection('user').findOne({ login: login }, (err, result) => {
+        db.collection('user').findOne({ "login": login }, (err, result) => {
             if (err) {
               return reject(err);
             }
-
             if (!result) {
               db.collection('user').insertOne(user, (err, result) => {
                 if (err) {
@@ -20,6 +19,7 @@ class UserService {
               });
             }
             else {
+                    delete user._id;
               db.collection('user').updateOne({ "login": login }, { $set: user }, (err, result) => {
                 if (err) {
                   return reject(err);
@@ -27,11 +27,11 @@ class UserService {
                 if (result.nb === 0) {
                   return reject('Unable to update the user');
                 }
-                resolve();
+                resolve(result);
               });
             }
           });
-      }).catch(reject);
+      }).catch(err => reject(err));
     });
   }
 

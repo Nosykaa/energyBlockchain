@@ -32,12 +32,14 @@ function initFactory() {
       let prosumer = {
         login: "prosumer",
         password: "test",
-        address: accounts[0]
+        address: accounts[0],
+        chargingHistory : []
       };
       let consumer = {
         login: "consumer",
         password: "test",
-        address: accounts[1]
+        address: accounts[1],
+        chargingHistory : []
       };
       let box = {
         login: "box",

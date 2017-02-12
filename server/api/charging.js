@@ -11,8 +11,6 @@ module.exports = (app) => {
 
 
   app.post('/charging/deploy', (req, res) => {
-    console.log("Request is received");
-    console.log("Request body is: " + req.body.userAddress);
     console.log(JSON.stringify(req.body));
     if (!req.body.userAddress)
       return apiHelper.formatError(res, {code: 403, message:'UserAddress is required'});
@@ -41,12 +39,11 @@ module.exports = (app) => {
   app.post('/charging/:contractAddress/chargeCompleted', (req, res) => {
     if (!req.body.userAddress)
       return apiHelper.formatError(res, {code: 403, message:'UserAddress is required'});
-    if (!req.body.contractAddress)
-      return apiHelper.formatError(res, {code: 403, message:'ContractAddress is required'});
     if (!req.body.endMeterReading)
       return apiHelper.formatError(res, {code: 403, message:'EndMeterReading is required'});
 
-    blockchainService.chargeCompleted(req.body.userAddress, req.body.contractAddress, req.body.endMeterReading)
+    console.log(JSON.stringify(req.body));
+    blockchainService.chargeCompleted(req.body.userAddress, req.params.contractAddress, req.body.endMeterReading)
       .then(contractAddress => res.status(200).send(contractAddress))
       .catch(err => apiHelper.formatError(res, err));
   });

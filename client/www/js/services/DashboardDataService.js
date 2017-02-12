@@ -30,25 +30,16 @@ services.factory('DashboardData', ['$http', '$q', 'Config', function ($http, $q,
             });
             return deferred.promise;
         },
-        saveUserContract: function (homeAddress, boxAddress, carAddress, sellPrice, chargingContractAddress) {
+        startContractBlockchain: function (boxAddress,homeAddress, carAddress, sellPrice, startingPointenergy) {
             var deferred = $q.defer();
 
-            var user = {};
-            user['chargingHistory'] = [];
-            user['userAddress'] = boxAddress;
-            user['homeAddress'] = homeAddress;
-            user['carAddress'] = carAddress;
-            user['sellPrice'] = sellPrice;
+            var body = {};
+            body['userAddress'] = boxAddress;
+            body['homeAddress'] = homeAddress;
+            body['carAddress'] = carAddress;
+            body['sellPrice'] = sellPrice;
+            body['startingPointenergy'] = startingPointenergy;
 
-            user.chargingHistory.push(
-                {
-                    userAddress:boxAddress,
-                    homeAddress:homeAddress,
-                    carAddress:carAddress,
-                    sellPrice:sellPrice,
-                    chargingContractAddress:chargingContractAddress
-                }
-            )
 
             var req = {
                 method: 'POST',
@@ -56,7 +47,38 @@ services.factory('DashboardData', ['$http', '$q', 'Config', function ($http, $q,
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                data:user
+                data:body
+            }
+
+            $http(req).success(function(data) {
+                console.log('start service')
+                console.log(data);
+                deferred.resolve(data);
+            }).error(function(err){
+                deferred.reject(err);
+            });
+            return deferred.promise;
+        },
+        saveUserContract: function (homeAddress, boxAddress, carAddress, sellPrice, startingPointenergy, chargingContractAddress, user) {
+            var deferred = $q.defer();
+            user.chargingHistory.push(
+                {
+                    userAddress:boxAddress,
+                    homeAddress:homeAddress,
+                    carAddress:carAddress,
+                    sellPrice:sellPrice,
+                    chargingContractAddress:chargingContractAddress,
+                    startingPointenergy : startingPointenergy
+                }
+            )
+
+            var req = {
+                method: 'POST',
+                url: 'http://localhost:5000/user/prosumer/charging',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data:{user:user}
             }
 
             $http(req).success(function(data) {
@@ -73,7 +95,7 @@ services.factory('DashboardData', ['$http', '$q', 'Config', function ($http, $q,
 
             // var user = {};
             // user['chargingHistory'] = [];
-            user = {
+            var body = {
                 amountToKeep:amountToKeep,
                 userAddress:userAddress
             };
@@ -84,7 +106,7 @@ services.factory('DashboardData', ['$http', '$q', 'Config', function ($http, $q,
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                data:user
+                data:body
             }
 
             $http(req).success(function(data) {
@@ -99,12 +121,9 @@ services.factory('DashboardData', ['$http', '$q', 'Config', function ($http, $q,
         finish_charge: function (userAddress,contractAddress,endMeterReading) {
             var deferred = $q.defer();
 
-            var user = {};
-            user['chargingHistory'] = [];
-            user = {
+            var body = {
                 endMeterReading:endMeterReading,
-                userAddress:userAddress,
-                contractAddress:contractAddress
+                userAddress:userAddress
             };
 
             var req = {
@@ -113,7 +132,7 @@ services.factory('DashboardData', ['$http', '$q', 'Config', function ($http, $q,
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                data:user
+                data:body
             }
 
             $http(req).success(function(data) {
@@ -127,14 +146,42 @@ services.factory('DashboardData', ['$http', '$q', 'Config', function ($http, $q,
         },
         get_money: function() {
             var deferred = $q.defer();
-            $http.get('http://localhost:5000' + '/homeGrid/0xd43b66860e901804d3938376fca59dc66951973a/prosumers')
-            .success(function (data) {
-                deferred.resolve(data);
+            $http.get('http://localhost:5000' + '/app/toto')
+            .success(function (homeGridAddress) {
+                $http.get('http://localhost:5000' + '/homeGrid/' + homeGridAddress + '/prosumers')
+                .success(function (data) {
+                    deferred.resolve(data);
+                }).error(function (err) {
+                    deferred.reject(err);
+                });
             }).error(function (err) {
                 deferred.reject(err);
             });
+            
             return deferred.promise;
-        }
+        },
+        updateBalance: function (boxAddress, homeAddress, carAddress) {
+            var deferred = $q.defer();
+            let retunValue = {
+                boxBalance : "",
+                carBalance : "",
+                homeBalance : ""
+            };
+            $http.get(API_URL + '/balance/' + boxAddress)
+            .then (function (boxBalance) {
+                   retunValue.boxBalance = boxBalance.data;
+                   $http.get(API_URL + '/balance/' + carAddress)
+                    .then (function (carBalance) {
+                        retunValue.carBalance = carBalance.data;
+                        $http.get(API_URL + '/balance/' + homeAddress)
+                        .then (function (homeBalance) {
+                            retunValue.homeBalance = homeBalance.data;
+                            deferred.resolve(retunValue);  
+                        })    
+                    }) 
+            });
+            return deferred.promise;
+        },
 
     };
 }])

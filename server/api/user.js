@@ -10,9 +10,10 @@ const apiHelper = require('./helper');
 module.exports = (app) => {
 
   app.post('/user/:login/charging', (req, res) => {
+      
     if (!req.body.user)
       return apiHelper.formatError(res, {code: 403, message:'User object is required'});
-    userService.save(req.params.login, user)
+    userService.save(req.params.login, req.body.user)
       .then(() => res.status(200).end())
       .catch(err =>  apiHelper.formatError(res, err));
   });

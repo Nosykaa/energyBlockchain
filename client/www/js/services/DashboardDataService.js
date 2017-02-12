@@ -100,7 +100,7 @@ services.factory('DashboardData', ['$http', '$q', 'Config', function ($http, $q,
 
             var req = {
                 method: 'POST',
-                url: 'http://localhost:5000/charging/' + carAddress + '/chargeStarted',
+                url: 'http://localhost:5000/charging/' + contractAddress + '/chargeStarted',
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -126,7 +126,7 @@ services.factory('DashboardData', ['$http', '$q', 'Config', function ($http, $q,
 
             var req = {
                 method: 'POST',
-                url: 'http://localhost:5000/charging/' + userAddress + '/chargeCompleted',
+                url: 'http://localhost:5000/charging/' + contractAddress + '/chargeCompleted',
                 headers: {
                     'Content-Type': 'application/json'
                 },

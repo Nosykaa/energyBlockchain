@@ -11,7 +11,6 @@ module.exports = (app) => {
 
 
   app.post('/charging/deploy', (req, res) => {
-    console.log(JSON.stringify(req.body));
     if (!req.body.userAddress)
       return apiHelper.formatError(res, {code: 403, message:'UserAddress is required'});
     if (!req.body.homeAddress)
@@ -20,12 +19,15 @@ module.exports = (app) => {
       return apiHelper.formatError(res, {code: 403, message:'CarAddress is required'} );
     if (!req.body.sellPrice)
       return apiHelper.formatError(res, {code: 403, message:'SellPrice is required'} );
+
     blockchainService.deployContract(req.body.userAddress, req.body.homeAddress, req.body.carAddress, req.body.sellPrice, req.body.startingPointenergy)
       .then(contractAddress => res.status(200).send(contractAddress))
       .catch(err => apiHelper.formatError(res, err));
   });
 
   app.post('/charging/:contractAddress/chargeStarted', (req, res) => {
+
+    console.log(JSON.stringify(req.body));
     if (!req.body.userAddress)
       return apiHelper.formatError(res, {code: 403, message:'UserAddress is required'});
     if (!req.body.amountToKeep)

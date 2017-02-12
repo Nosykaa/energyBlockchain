@@ -4,6 +4,7 @@ const CONTRACT = require('./contract/charging');
 class ChargingService {
 
   deployContract(userAddress, homeAddress, carAddress, sellPrice, startingPointenergy) {
+    
     return new Promise((resolve, reject) => {
       web3.eth.contract(CONTRACT.abi).new(homeAddress, carAddress, web3.toWei(sellPrice, 'ether'), startingPointenergy, { from: userAddress, data: CONTRACT.code, gas: 4500000 }, (err, contract) => {
         if (err) {
@@ -18,8 +19,7 @@ class ChargingService {
   chargeStarted(userAddress, contractAddress, amountToKeep) {
     return new Promise((resolve, reject) => {
       let contract = web3.eth.contract(CONTRACT.abi).at(contractAddress);
-      console.log(amountToKeep)
-        contract.chargeStarted({ from: userAddress, gas: 2500000, value: web3.toWei(amountToKeep, 'ether') }, (err, result) => {
+      contract.chargeStarted({ from: userAddress, gas: 2500000, value: web3.toWei(amountToKeep, 'ether') }, (err, result) => {
         if (err) {
           return reject(err);
         }
